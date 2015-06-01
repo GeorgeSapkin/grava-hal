@@ -10,82 +10,84 @@ import static org.junit.Assert.*;
  */
 public class PitsTest {
 
-    private Pits pits;
+    private Pits pitsA;
+    private Pits pitsB;
 
     @Before
     public void setUp() throws Exception {
-        pits = new Pits();
+        pitsA = new Pits();
+        pitsB = pitsA.getOpposite();
     }
 
     @Test
     public void testGetGravaHal() {
-        Pit pit6     = pits.get(6);
-        Pit gravaHal = pits.getGravaHal();
+        Pit pit6     = pitsA.get(6);
+        Pit gravaHal = pitsA.getGravaHal();
         assertEquals(pit6, gravaHal);
     }
 
     @Test
     public void testArePlayerPitsEmpty_sideA() throws Exception {
-        pits.get(0).clearStones();
-        pits.get(1).clearStones();
-        pits.get(2).clearStones();
-        pits.get(3).clearStones();
-        pits.get(4).clearStones();
-        pits.get(5).clearStones();
+        pitsA.get(0).clearStones();
+        pitsA.get(1).clearStones();
+        pitsA.get(2).clearStones();
+        pitsA.get(3).clearStones();
+        pitsA.get(4).clearStones();
+        pitsA.get(5).clearStones();
 
-        assertTrue(pits.arePlayerPitsEmpty());
+        assertTrue(pitsA.arePlayerPitsEmpty());
     }
 
     @Test
     public void testArePlayerPitsEmpty_sideB() throws Exception {
-        pits.get(7).clearStones();
-        pits.get(8).clearStones();
-        pits.get(9).clearStones();
-        pits.get(10).clearStones();
-        pits.get(11).clearStones();
-        pits.get(12).clearStones();
+        pitsB.get(0).clearStones();
+        pitsB.get(1).clearStones();
+        pitsB.get(2).clearStones();
+        pitsB.get(3).clearStones();
+        pitsB.get(4).clearStones();
+        pitsB.get(5).clearStones();
 
-        assertTrue(pits.arePlayerPitsEmpty());
+        assertTrue(pitsB.arePlayerPitsEmpty());
     }
 
     @Test
     public void testArePlayerPitsEmpty_sideANotEmpty() throws Exception {
-        pits.get(0).clearStones();
-        pits.get(1).clearStones();
-        pits.get(2).clearStones();
-        pits.get(4).clearStones();
-        pits.get(5).clearStones();
+        pitsA.get(0).clearStones();
+        pitsA.get(1).clearStones();
+        pitsA.get(2).clearStones();
+        pitsA.get(4).clearStones();
+        pitsA.get(5).clearStones();
 
-        assertFalse(pits.arePlayerPitsEmpty());
+        assertFalse(pitsA.arePlayerPitsEmpty());
     }
 
     @Test
     public void testArePlayerPitsEmpty_sideBNotEmpty() throws Exception {
-        pits.get(7).clearStones();
-        pits.get(8).clearStones();
-        pits.get(9).clearStones();
-        pits.get(11).clearStones();
-        pits.get(12).clearStones();
+        pitsB.get(0).clearStones();
+        pitsB.get(1).clearStones();
+        pitsB.get(2).clearStones();
+        pitsB.get(4).clearStones();
+        pitsB.get(5).clearStones();
 
-        assertFalse(pits.arePlayerPitsEmpty());
+        assertFalse(pitsA.arePlayerPitsEmpty());
     }
 
     @Test
     public void testClearPits() throws Exception {
-        pits.clearPits();
+        pitsA.clearPits();
 
-        assertEquals(0, pits.get(0).getStones());
-        assertEquals(0, pits.get(1).getStones());
-        assertEquals(0, pits.get(2).getStones());
-        assertEquals(0, pits.get(3).getStones());
-        assertEquals(0, pits.get(4).getStones());
-        assertEquals(0, pits.get(5).getStones());
+        assertEquals(0, pitsA.get(0).getStones());
+        assertEquals(0, pitsA.get(1).getStones());
+        assertEquals(0, pitsA.get(2).getStones());
+        assertEquals(0, pitsA.get(3).getStones());
+        assertEquals(0, pitsA.get(4).getStones());
+        assertEquals(0, pitsA.get(5).getStones());
 
-        assertEquals(0, pits.get(7).getStones());
-        assertEquals(0, pits.get(8).getStones());
-        assertEquals(0, pits.get(9).getStones());
-        assertEquals(0, pits.get(10).getStones());
-        assertEquals(0, pits.get(11).getStones());
-        assertEquals(0, pits.get(12).getStones());
+        assertEquals(0, pitsB.get(0).getStones());
+        assertEquals(0, pitsB.get(1).getStones());
+        assertEquals(0, pitsB.get(2).getStones());
+        assertEquals(0, pitsB.get(3).getStones());
+        assertEquals(0, pitsB.get(4).getStones());
+        assertEquals(0, pitsB.get(5).getStones());
     }
 }
