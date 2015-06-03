@@ -1,0 +1,12 @@
+.pit {
+    width: 2em;
+    text-align: center;
+}
+
+.myPit {
+    background-color: palegreen;
+}
+
+.opponnetsPit {
+    background-color: lightsalmon;
+}
