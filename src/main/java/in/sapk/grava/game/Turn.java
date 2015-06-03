@@ -1,9 +1,11 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
 
 /**
  * Created by george on 28/05/15.
  */
 public class Turn {
+
+    private static final int HALF_STONES = 36;
 
     private Side side;
 
@@ -17,12 +19,23 @@ public class Turn {
         return pits;
     }
 
+    private TurnType type;
+
+    public TurnType getType() {
+        return type;
+    }
+
     public Turn(Side side, Pits pits) {
+        this(side, pits, TurnType.PLAYER);
+    }
+
+    public Turn(Side side, Pits pits, TurnType type) {
         if (pits == null)
             throw new IllegalArgumentException("pits cannot be null");
 
         this.side = side;
         this.pits = new Pits(side, pits);
+        this.type = type;
     }
 
     public Turn sow(final int pitIdx) {
@@ -34,7 +47,7 @@ public class Turn {
         int stones = srcPit.clearStones();
         if (stones == 0)
             throw new IllegalStateException(
-                    "Cannot move stones from empty pit");
+                    "Cannot move stones from an empty pit");
 
         Pit gravaHal = pits.getGravaHal();
 
@@ -83,17 +96,19 @@ public class Turn {
             --stones;
         }
 
+        TurnType type = TurnType.PLAYER;
+        if (gravaHal.getStones() > HALF_STONES)
+            type = TurnType.GAME_OVER;
+
         // if either side pits are empty
         if (pits.arePlayerPitsEmpty()) {
             // move remaining stones to respective grava hals
             pits.clearPits();
-
-            // game over,no next turn
-            return null;
+            type = TurnType.GAME_OVER;
         }
 
         Side nextSide = !bonusTurn ? side.getOpposite() : side;
-        Turn nextTurn = new Turn(nextSide, pits);
+        Turn nextTurn = new Turn(nextSide, pits, type);
         return nextTurn;
     }
 }

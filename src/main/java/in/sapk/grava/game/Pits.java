@@ -1,14 +1,16 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
+
+import java.util.Iterator;
 
 /**
  * Created by george on 30/05/15.
  */
-public class Pits {
+public class Pits implements Iterable<Pit> {
 
     private static final int SIDE_A_OFFSET        = 0;
     private static final int SIDE_B_OFFSET        = 7;
     private static final int GRAVA_HAL_OFFSET     = 6;
-    private static final int TOTAL_PIT_COUNT      = 14;
+            static final int TOTAL_PIT_COUNT      = 14;
     private static final int SIDE_PIT_COUNT       = 6;
     private static final int SIDE_TOTAL_PIT_COUNT = 7;
 
@@ -125,12 +127,17 @@ public class Pits {
 
     private void initOpposites() {
         for (int idx = SIDE_PIT_COUNT; idx >= 0; --idx) {
-            final int opIdx = idx + SIDE_TOTAL_PIT_COUNT;
+            final int opIdx = SIDE_TOTAL_PIT_COUNT + SIDE_PIT_COUNT - idx - 1;
 
             Pit pitA = pits[idx];
             Pit pitB = pits[opIdx];
             pitA.setOpposite(pitB);
             pitB.setOpposite(pitA);
         }
+    }
+
+    @Override
+    public Iterator<Pit> iterator() {
+        return new PitsIterator(this);
     }
 }

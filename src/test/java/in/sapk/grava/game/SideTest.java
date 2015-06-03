@@ -1,8 +1,8 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by george on 27/05/15.

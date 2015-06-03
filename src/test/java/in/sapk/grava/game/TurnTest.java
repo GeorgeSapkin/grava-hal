@@ -1,4 +1,4 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +57,7 @@ public class TurnTest {
         Turn turn2 = turn1.sow(0);
 
         assertNotNull(turn2);
+        assertEquals(TurnType.PLAYER, turn2.getType());
 
         assertEquals(0, pitsA.get(0).getStones());
         assertEquals(7, pitsA.get(1).getStones());
@@ -76,6 +77,7 @@ public class TurnTest {
         Turn turn2 = turn1.sow(1);
 
         assertNotNull(turn2);
+        assertEquals(TurnType.PLAYER, turn2.getType());
 
         assertEquals(6, pitsA.get(0).getStones());
         assertEquals(0, pitsA.get(1).getStones());
@@ -99,6 +101,7 @@ public class TurnTest {
         Turn turn2 = turn1.sow(5);
 
         assertNotNull(turn2);
+        assertEquals(TurnType.PLAYER, turn2.getType());
 
         assertEquals(7, pitsA.get(0).getStones());
         assertEquals(0, pitsA.get(5).getStones());
@@ -125,17 +128,18 @@ public class TurnTest {
         Turn turn2 = turn1.sow(5);
 
         assertNotNull(turn2);
+        assertEquals(TurnType.PLAYER, turn2.getType());
 
         assertEquals(0, pitsA.get(0).getStones());
         assertEquals(0, pitsA.get(5).getStones());
         assertEquals(9, pitsA.getGravaHal().getStones());
 
-        assertEquals(0, pitsB.get(0).getStones());
+        assertEquals(7, pitsB.get(0).getStones());
         assertEquals(7, pitsB.get(1).getStones());
         assertEquals(7, pitsB.get(2).getStones());
         assertEquals(7, pitsB.get(3).getStones());
         assertEquals(7, pitsB.get(4).getStones());
-        assertEquals(7, pitsB.get(5).getStones());
+        assertEquals(0, pitsB.get(5).getStones());
         assertEquals(0, pitsB.getGravaHal().getStones());
 
         Side nextSide = turn2.getSide();
@@ -150,6 +154,7 @@ public class TurnTest {
         Turn turn2 = turn1.sow(1);
 
         assertNotNull(turn2);
+        assertEquals(TurnType.PLAYER, turn2.getType());
 
         assertEquals(0, pitsA.get(1).getStones());
         assertEquals(7, pitsA.get(2).getStones());
@@ -176,7 +181,8 @@ public class TurnTest {
         Turn turn1 = new Turn(Side.A, pitsA);
         Turn turn2 = turn1.sow(5);
 
-        assertNull(turn2);
+        assertNotNull(turn2);
+        assertEquals(TurnType.GAME_OVER, turn2.getType());
 
         assertEquals(0,  pitsA.get(0).getStones());
         assertEquals(0,  pitsA.get(1).getStones());

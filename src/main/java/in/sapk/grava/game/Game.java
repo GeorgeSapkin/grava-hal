@@ -1,4 +1,4 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
 
 /**
  * Created by george on 27/05/15.
@@ -16,7 +16,7 @@ public class Game {
     }
 
     public Turn start() {
-        Turn turn = new Turn(Side.A, pits);
+        Turn turn = new Turn(Side.A, pits, TurnType.PLAYER);
         return turn;
     }
 }

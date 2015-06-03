@@ -1,4 +1,4 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
 
 /**
  * Created by george on 27/05/15.
@@ -9,10 +9,6 @@ public class GravaHal extends Pit {
 
     public GravaHal(final Side side) {
         super(side, INITIAL_STONE_COUNT);
-    }
-
-    public GravaHal(final Side side, final int stones) {
-        super(side, stones);
     }
 
     @Override

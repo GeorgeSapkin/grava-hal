@@ -1,7 +1,18 @@
 group 'in.sapk.grava'
 version '1.0-SNAPSHOT'
 
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
 apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'org.akhikhl.gretty'
 
 sourceCompatibility = 1.8
 
@@ -10,13 +21,22 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'junit:junit:4.12'
+
+    providedCompile (
+            'javax.json:javax.json-api:1.0',
+            'javax.websocket:javax.websocket-api:1.1'
+    )
+
+    runtime (
+            'org.glassfish:javax.json:1.0.4',
+    )
 }
 
-jar {
-    manifest {
-        attributes 'Main-Class': 'in.sapk.grava.App'
-    }
+gretty {
+    port = 8080
+    contextPath = '/'
+    servletContainer = 'jetty9'
 }
 
 test {

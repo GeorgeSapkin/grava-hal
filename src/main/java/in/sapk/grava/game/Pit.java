@@ -1,4 +1,4 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
 
 /**
  * Created by george on 27/05/15.

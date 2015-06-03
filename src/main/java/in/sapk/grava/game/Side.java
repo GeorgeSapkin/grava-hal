@@ -1,4 +1,4 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
 
 public enum Side {
     A (0),

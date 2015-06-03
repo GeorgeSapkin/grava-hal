@@ -1,7 +1,9 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
 
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by george on 27/05/15.

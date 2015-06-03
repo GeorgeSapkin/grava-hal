@@ -1,4 +1,4 @@
-package in.sapk.grava;
+package in.sapk.grava.game;
 
 import org.junit.Before;
 import org.junit.Test;
