@@ -20,8 +20,8 @@ public class TurnTest {
         pitsB = pitsA.getOpposite();
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testCtor_badArg() throws IllegalArgumentException {
+    @Test(expected = NullPointerException.class)
+    public void testCtor_badArg() throws NullPointerException {
         new Turn(Side.A, null);
     }
 
@@ -33,14 +33,14 @@ public class TurnTest {
         assertNotNull(pits2);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testMove_badArgMinus1() throws IllegalArgumentException {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testMove_badArgMinus1() throws IndexOutOfBoundsException {
         Turn turn = new Turn(Side.A, pitsA);
         turn.sow(-1);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testMove_badArg6() throws IllegalArgumentException {
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void testMove_badArg6() throws IndexOutOfBoundsException {
         Turn turn = new Turn(Side.A, pitsA);
         turn.sow(6);
     }

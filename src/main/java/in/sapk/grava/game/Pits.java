@@ -11,7 +11,7 @@ public class Pits implements Iterable<Pit> {
     private static final int SIDE_A_OFFSET = 0;
     private static final int SIDE_B_OFFSET = 7;
     private static final int GRAVA_HAL_OFFSET = 6;
-    private static final int SIDE_PIT_COUNT = 6;
+    static final int SIDE_PIT_COUNT = 6;
     private static final int SIDE_TOTAL_PIT_COUNT = 7;
 
     private final Pit[] pitStore;

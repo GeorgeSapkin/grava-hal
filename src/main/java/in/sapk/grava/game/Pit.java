@@ -1,5 +1,7 @@
 package in.sapk.grava.game;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * Created by george on 27/05/15.
  */
@@ -26,9 +28,7 @@ public class Pit {
     }
 
     private void setStones(final int value) {
-        if (value < 0) {
-            throw new IllegalArgumentException("value must be positive");
-        }
+        checkArgument(value >= 0, "value must be >= 0");
 
         stones = value;
     }
@@ -38,9 +38,7 @@ public class Pit {
     }
 
     public void addStones(final int value) {
-        if (value < 0) {
-            throw new IllegalArgumentException("value must be positive");
-        }
+        checkArgument(value >= 0, "value must be >= 0");
 
         stones += value;
     }

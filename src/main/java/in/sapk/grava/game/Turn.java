@@ -1,5 +1,7 @@
 package in.sapk.grava.game;
 
+import static com.google.common.base.Preconditions.*;
+
 /**
  * Created by george on 28/05/15.
  */
@@ -17,9 +19,7 @@ public class Turn {
     }
 
     public Turn(Side side, Pits pits, TurnType type) {
-        if (pits == null) {
-            throw new IllegalArgumentException("pits cannot be null");
-        }
+        checkNotNull(pits, "pits cannot be null");
 
         this.side = side;
         this.pits = new Pits(side, pits);
@@ -39,17 +39,12 @@ public class Turn {
     }
 
     public Turn sow(final int pitIdx) {
-        if (pitIdx < 0 || pitIdx > 5) {
-            throw new IllegalArgumentException("pitIdx must be in [0; 5]");
-        }
+        checkElementIndex(pitIdx, Pits.SIDE_PIT_COUNT, "pitIdx must be in [0; 5]");
 
         Pit srcPit = pits.get(pitIdx);
 
         int stones = srcPit.clearStones();
-        if (stones == 0) {
-            throw new IllegalStateException(
-                    "Cannot move stones from an empty pit");
-        }
+        checkState(stones > 0, "Cannot move stones from an empty pit");
 
         Pit gravaHal = pits.getGravaHal();
 
