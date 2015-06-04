@@ -5,7 +5,8 @@ import java.util.Map;
 /**
  * Created by george on 04/06/15.
  */
-public class JsonRpcMethod {
+@SuppressWarnings("unused")
+class JsonRpcMethod {
     public String jsonrpc;
     public String id;
     public String method;

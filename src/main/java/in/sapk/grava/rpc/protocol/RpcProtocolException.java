@@ -5,8 +5,9 @@ package in.sapk.grava.rpc.protocol;
  */
 public class RpcProtocolException extends Exception {
 
+    @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
-    private String id;
+    private final String id;
 
     public RpcProtocolException(String message) {
         super(message);
@@ -20,12 +21,14 @@ public class RpcProtocolException extends Exception {
         this.id = null;
     }
 
+    @SuppressWarnings("SameParameterValue")
     public RpcProtocolException(String message, Throwable cause) {
         super(message, cause);
 
         this.id = null;
     }
 
+    @SuppressWarnings("SameParameterValue")
     public RpcProtocolException(String id, String message) {
         super(message);
 
