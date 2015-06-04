@@ -14,12 +14,11 @@ public class PitsIteratorTest {
 
     private static final int TOTAL_PIT_COUNT = 14;
 
-    private Pits pits;
     private Iterator<Pit> pitsIterator;
 
     @Before
     public void setUp() throws Exception {
-        pits = new Pits();
+        Pits pits = new Pits();
         pitsIterator = pits.iterator();
     }
 

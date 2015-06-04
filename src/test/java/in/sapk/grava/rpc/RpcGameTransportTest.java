@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
  */
 public class RpcGameTransportTest {
 
-    public GameTransport transport;
+    private GameTransport transport;
 
     @Before
     public void setUp() {
