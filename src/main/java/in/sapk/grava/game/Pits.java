@@ -14,7 +14,7 @@ public class Pits implements Iterable<Pit> {
     private static final int SIDE_PIT_COUNT       = 6;
     private static final int SIDE_TOTAL_PIT_COUNT = 7;
 
-    private Pit[] pits;
+    private final Pit[] pits;
 
     private void setSide(final Side side) {
         this.side        = side;
@@ -40,7 +40,8 @@ public class Pits implements Iterable<Pit> {
         setSide(side);
     }
 
-    public Pits(final Side side) {
+    @SuppressWarnings("SameParameterValue")
+    private Pits(final Side side) {
         this.pits = new Pit[TOTAL_PIT_COUNT];
 
         setSide(side);

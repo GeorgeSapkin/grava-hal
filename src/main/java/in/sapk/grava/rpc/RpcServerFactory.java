@@ -7,7 +7,7 @@ import in.sapk.grava.rpc.protocol.JsonRpcProtocol;
  */
 public class RpcServerFactory {
 
-    private static Object instanceLock = new Object();
+    private static final Object instanceLock = new Object();
     private static GameRpcServer instance;
 
     public GameRpcServer getRpcServer() {

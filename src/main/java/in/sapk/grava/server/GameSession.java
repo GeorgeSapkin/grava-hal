@@ -10,12 +10,20 @@ import in.sapk.grava.game.Turn;
 /**
  * Created by george on 27/05/15.
  */
-public class GameSession {
+class GameSession {
 
-    private Game game;
+    private final Game game;
 
     private GameTransport transportA;
     private GameTransport transportB;
+
+    public String getIdA() {
+        return transportA.getId();
+    }
+
+    public String getIdB() {
+        return transportB.getId();
+    }
 
     private Turn currentTurn;
 
@@ -61,6 +69,14 @@ public class GameSession {
         notifySides();
     }
 
+    public void close() {
+        if (transportA != null)
+            transportA.close();
+
+        if (transportB != null)
+            transportB.close();
+    }
+
     private void notifySides() {
         Pits pitsA = new Pits(Side.A, currentTurn.getPits());
         transportA.notify(currentTurn, pitsA);
@@ -70,9 +86,9 @@ public class GameSession {
     }
 
     private Side getSideFromSession(final String sessionId) {
-        if (transportA.getId() == sessionId)
+        if (transportA.getId().equals(sessionId))
             return Side.A;
-        else if (transportB.getId() == sessionId)
+        else if (transportB.getId().equals(sessionId))
             return Side.B;
 
         throw new IllegalStateException(

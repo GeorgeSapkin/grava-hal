@@ -15,8 +15,8 @@ public class GameRpcServer implements RpcServer {
     private static final String INDEX_KEY  = "index";
     private static final String SOW_METHOD = "sow";
 
-    private GameServer gameServer;
-    private RpcProtocol protocol;
+    private final GameServer gameServer;
+    private final RpcProtocol protocol;
 
     public GameRpcServer(final RpcProtocol protocol) {
         this.protocol = protocol;
@@ -45,7 +45,7 @@ public class GameRpcServer implements RpcServer {
 
     @Override
     public void onClose(RpcSession session) {
-        // TODO: cleanup sessions
+        gameServer.leave(session.getId());
     }
 
     private static void sendText(RpcSession session, final String message) {

@@ -4,8 +4,6 @@ import in.sapk.grava.game.Pits;
 import in.sapk.grava.game.Side;
 import in.sapk.grava.game.Turn;
 
-import java.io.IOException;
-
 /**
  * Created by george on 27/05/15.
  */

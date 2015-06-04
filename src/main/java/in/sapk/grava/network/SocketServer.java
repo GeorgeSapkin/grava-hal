@@ -8,7 +8,9 @@ import in.sapk.grava.rpc.RpcServer;
 import in.sapk.grava.rpc.RpcServerFactory;
 import in.sapk.grava.rpc.RpcSession;
 
-import javax.websocket.*;
+import javax.websocket.OnClose;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
@@ -16,7 +18,7 @@ import javax.websocket.server.ServerEndpoint;
 @SuppressWarnings("unused")
 public class SocketServer {
 
-    private RpcServer rpcServer;
+    private final RpcServer rpcServer;
 
     public SocketServer() {
         // TODO: should be injected instead

@@ -97,7 +97,7 @@ public class JsonRpcProtocol implements RpcProtocol {
             msgBuilder.addNull(METHOD_KEY);
 
         JsonArrayBuilder paramsBuilder = Json.createArrayBuilder();
-        params.forEach((v) -> paramsBuilder.add(v));
+        params.forEach(paramsBuilder::add);
         msgBuilder.add(PARAMS_KEY, paramsBuilder);
 
         StringWriter writer = new StringWriter();
@@ -148,21 +148,17 @@ public class JsonRpcProtocol implements RpcProtocol {
     }
 
     private static JsonObject readJson(String message) throws RpcProtocolException {
-        JsonReader jsonReader = Json.createReader(new StringReader(message));
-
-        JsonObject result = null;
-        try {
+        JsonObject result;
+        try (JsonReader jsonReader = Json.createReader(new StringReader(message))) {
             result = jsonReader.readObject();
-        } catch (JsonException|IllegalStateException e) {
+        } catch (JsonException | IllegalStateException e) {
             throw new RpcProtocolException(null, e.getMessage());
-        } finally {
-            jsonReader.close();
         }
 
         return result;
     }
 
-    private static String validate(JsonObject obj) throws RpcProtocolException {
+    private static void validate(JsonObject obj) throws RpcProtocolException {
         if (obj == null)
             throw new IllegalArgumentException("obj cannot be null");
 
@@ -177,8 +173,6 @@ public class JsonRpcProtocol implements RpcProtocol {
         String method = obj.getString(METHOD_KEY, null);
         if (method == null || method.isEmpty())
             throw new RpcProtocolException(id, METHOD_KEY + " cannot be null or empty");
-
-        return id;
     }
 }
 

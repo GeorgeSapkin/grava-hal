@@ -24,7 +24,7 @@ function GameClient() {
 
         if (this.side == "A")
             notify('Waiting for opponent');
-    }
+    };
 
     this.update = function(params) {
         if (params.constructor !== Array) {
@@ -34,7 +34,7 @@ function GameClient() {
 
         for (var i = 13; i >= 0; --i)
             $('#p' + i).text(params[i]);
-    }
+    };
 
     this.turn = function (params) {
         if (params.side === undefined || params.turnType === undefined) {
@@ -114,7 +114,6 @@ function connect() {
         if (msg.id !== undefined) {
             var callback = futures[msg.id];
             callback(msg.result, msg.error);
-            return;
         }
         else {
             onNotify(msg);
@@ -123,6 +122,9 @@ function connect() {
 
     this.webSocket.onclose = function(event) {
         console.log("Connection closed");
+
+        toggleSowButtons(false);
+        notify('Connection closed');
     };
 }
 
@@ -165,7 +167,7 @@ function invoke(method, params, callback) {
         method:  method,
         params:  params,
         id:      (++this.msgId).toString()
-    }
+    };
 
     this.futures[this.msgId] = callback;
 

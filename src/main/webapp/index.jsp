@@ -21,7 +21,7 @@
 
 <div>
     <div>
-        <label id="info" />
+        <label id="info" ></label>
     </div>
     <div>
         <table>

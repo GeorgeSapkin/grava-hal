@@ -7,8 +7,8 @@ import java.util.*;
  */
 public class GameServer {
 
-    private List<GameSession> sessions;
-    private Map<String, GameSession> sessionMap;
+    private final List<GameSession> sessions;
+    private final Map<String, GameSession> sessionMap;
 
     public GameServer() {
         sessions   = Collections.synchronizedList(new ArrayList<>());
@@ -18,17 +18,14 @@ public class GameServer {
     /**
      * Joins new or existing game session
      * @param transport
-     * @return new or existing game session
      */
-    public GameSession join(GameTransport transport) {
+    public void join(GameTransport transport) {
         System.out.println("gameServer.join " + transport.getId());
 
         GameSession session = getLastSession();
         session.join(transport);
 
         sessionMap.put(transport.getId(), session);
-
-        return session;
     }
 
     public void sow(final String sessionId, final int idx) {
@@ -38,6 +35,20 @@ public class GameServer {
 
         GameSession session = sessionMap.get(sessionId);
         session.sow(sessionId, idx);
+    }
+
+    public void leave(final String sessionId) {
+        if (!sessionMap.containsKey(sessionId))
+            return;
+
+        System.out.println("Closing session " + sessionId);
+
+        GameSession session = sessionMap.get(sessionId);
+        session.close();
+
+        sessionMap.remove(session.getIdA());
+        sessionMap.remove(session.getIdB());
+        sessions.remove(session);
     }
 
     private GameSession getLastSession() {

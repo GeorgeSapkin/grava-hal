@@ -5,7 +5,7 @@ package in.sapk.grava.game;
  */
 public class Game {
 
-    private Pits pits;
+    private final Pits pits;
 
     public Pits getPits() {
         return pits;

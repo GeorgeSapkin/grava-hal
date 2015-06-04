@@ -25,6 +25,7 @@ public class Turn {
         return type;
     }
 
+    @SuppressWarnings("SameParameterValue")
     public Turn(Side side, Pits pits) {
         this(side, pits, TurnType.PLAYER);
     }

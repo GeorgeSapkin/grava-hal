@@ -5,9 +5,9 @@ import java.util.Iterator;
 /**
  * Created by george on 03/06/15.
  */
-public class PitsIterator implements Iterator<Pit> {
+class PitsIterator implements Iterator<Pit> {
 
-    private Pits pits;
+    private final Pits pits;
     private int idx;
 
     public PitsIterator(Pits pits) {
