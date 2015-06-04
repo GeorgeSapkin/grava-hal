@@ -61,7 +61,13 @@ public class Pit {
         this.opposite = opposite;
     }
 
-    public boolean canPlaceFrom(final Side side) {
+    boolean canPlaceFrom(final Side side) {
         return true;
+    }
+
+    boolean isSameSideAndEmpty(final Side side) {
+        boolean sameSide = this.side == side;
+        boolean destEmpty = this.stones == 0;
+        return sameSide && destEmpty;
     }
 }

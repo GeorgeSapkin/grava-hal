@@ -41,51 +41,35 @@ public class Turn {
     public Turn sow(final int pitIdx) {
         checkElementIndex(pitIdx, Pits.SIDE_PIT_COUNT, "pitIdx must be in [0; 5]");
 
-        Pit srcPit = pits.get(pitIdx);
-
-        int stones = srcPit.clearStones();
+        int stones = pits.get(pitIdx).clearStones();
         checkState(stones > 0, "Cannot move stones from an empty pit");
 
         Pit gravaHal = pits.getGravaHal();
 
-        // get global pit index
         int nextPitIdx = pitIdx;
 
         boolean bonusTurn = false;
         while (stones != 0) {
-            ++nextPitIdx;
-            Pit destPit = pits.get(nextPitIdx);
-
-            boolean canPlace = destPit.canPlaceFrom(side);
-            if (!canPlace) {
+            final Pit destPit = pits.get(++nextPitIdx);
+            if (!destPit.canPlaceFrom(side)) {
                 continue;
             }
 
-            boolean lastStone = stones == 1;
-            if (lastStone) {
-                boolean isGravaHal = destPit == gravaHal;
-                if (isGravaHal) {
+            // if last stone
+            if (stones == 1) {
+                // if destination is grava hal
+                if (destPit == gravaHal) {
+                    // player gets a bonus turn
                     bonusTurn = true;
-                } else { // not grava hal
 
-                    // if destination pit is own and empty
+                } else if (destPit.isSameSideAndEmpty(side)) {
+                    // if destination pit is not grava gal but is own and empty
+                    // put stone and opposite opponent's pit's stones into grava hal
+                    final int opStones = destPit.getOpposite().clearStones();
+                    gravaHal.addStones(opStones + 1);
 
-                    int destStones = destPit.getStones();
-                    boolean sameSide = destPit.getSide() == side;
-                    boolean destEmpty = destStones == 0;
-                    if (sameSide && destEmpty) {
-
-                        // move stone to grava hal
-                        gravaHal.addStone();
-
-                        // and move opposite pit's stones to grava hal
-                        Pit opPit = destPit.getOpposite();
-                        int opStones = opPit.clearStones();
-                        gravaHal.addStones(opStones);
-
-                        // last stone moved, nothing else to do
-                        break;
-                    }
+                    // last stone moved, nothing else to do
+                    break;
                 }
             }
 
@@ -94,34 +78,42 @@ public class Turn {
         }
 
         TurnType nextTurnType = TurnType.PLAYER;
-        if (gravaHal.getStones() > HALF_STONES) {
-            nextTurnType = TurnType.GAME_OVER;
-        }
 
         // if either side pits are empty
         if (pits.arePlayerPitsEmpty()) {
             // move remaining stones to respective grava hals
             pits.clearPits();
             nextTurnType = TurnType.GAME_OVER;
+
+        } else if (gravaHal.getStones() > HALF_STONES) {
+            // if grava hal has more than half of all the stones
+            // then game is over
+            nextTurnType = TurnType.GAME_OVER;
         }
 
+        return getNextTurn(nextTurnType, bonusTurn);
+    }
+
+    private Turn getNextTurn(TurnType nextTurnType, boolean bonusTurn) {
         Side nextSide = side;
         // if game over, check which side has more stones
         if (nextTurnType == TurnType.GAME_OVER) {
+            final Pit gravaHal = pits.getGravaHal();
             final int thisStones = gravaHal.getStones();
             final int otherStones = gravaHal.getOpposite().getStones();
 
-            if (thisStones > otherStones) {
-                nextSide = side;
-            } else if (otherStones > thisStones) {
-                nextSide = side.getOpposite();
-            } else { // stones are equal
+            // if there is the same amount of stones in both grava hals
+            if (thisStones == otherStones) {
+                // then this game is a draw
                 nextTurnType = TurnType.DRAW;
+            } else {
+                // else side with most stones is the winner
+                nextSide = thisStones > otherStones ? side : side.getOpposite();
             }
         } else if (!bonusTurn) {
             nextSide = side.getOpposite();
         }
-        // else same side
+        // else same side and player turn
 
         return new Turn(nextSide, pits, nextTurnType);
     }

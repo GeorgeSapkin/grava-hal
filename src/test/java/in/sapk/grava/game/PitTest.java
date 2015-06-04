@@ -32,6 +32,7 @@ public class PitTest {
         int stones = pit.getStones();
         assertEquals(7, stones);
     }
+
     @Test
     public void testClearStones() {
         Pit pit = new Pit(Side.A);
@@ -56,7 +57,7 @@ public class PitTest {
 
     @Test
     public void testSetOpposite() {
-        Pit pit   = new Pit(Side.A);
+        Pit pit = new Pit(Side.A);
         Pit opPit = new Pit(Side.B);
         pit.setOpposite(opPit);
         Pit opPit2 = pit.getOpposite();
@@ -70,16 +71,44 @@ public class PitTest {
     }
 
     @Test
-    public void testCanPlaceFrom_sameSideIsTrue() {
+    public void testCanPlaceFrom_sameSide_isTrue() {
         Pit pit = new Pit(Side.A);
         Side side = pit.getSide();
         assertTrue(pit.canPlaceFrom(side));
     }
 
     @Test
-    public void testCanPlaceFrom_oppositeSideIsTrue() {
+    public void testCanPlaceFrom_oppositeSide_isTrue() {
         Pit pit = new Pit(Side.A);
         Side side = pit.getSide().getOpposite();
         assertTrue(pit.canPlaceFrom(side));
+    }
+
+    @Test
+    public void testIsSameSideAndEmpty_sameSideAndEmpty_isTrue() {
+        Pit pit = new Pit(Side.A);
+        pit.clearStones();
+        assertTrue(pit.isSameSideAndEmpty(Side.A));
+    }
+
+    @Test
+    public void testIsSameSideAndEmpty_oppositeSideAndEmpty() {
+        Pit pit = new Pit(Side.A);
+        pit.clearStones();
+        assertFalse(pit.isSameSideAndEmpty(pit.getSide().getOpposite()));
+    }
+
+    @Test
+    public void testIsSameSideAndEmpty_sameSideAndNotEmpty_isFalse() {
+        Pit pit = new Pit(Side.A);
+        pit.addStone();
+        assertFalse(pit.isSameSideAndEmpty(Side.A));
+    }
+
+    @Test
+    public void testIsSameSideAndEmpty_oppositeSideAndNotEmpty_isFalse() {
+        Pit pit = new Pit(Side.A);
+        pit.addStone();
+        assertFalse(pit.isSameSideAndEmpty(pit.getSide().getOpposite()));
     }
 }
