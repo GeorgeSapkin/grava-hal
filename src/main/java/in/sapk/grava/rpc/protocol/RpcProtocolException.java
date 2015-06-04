@@ -6,13 +6,7 @@ package in.sapk.grava.rpc.protocol;
 public class RpcProtocolException extends Exception {
 
     private static final long serialVersionUID = 1L;
-    private final String id;
-
-    public RpcProtocolException(final String id, final String message) {
-        super(message);
-
-        this.id = id;
-    }
+    private String id;
 
     public RpcProtocolException(String message) {
         super(message);
@@ -24,6 +18,18 @@ public class RpcProtocolException extends Exception {
         super(cause);
 
         this.id = null;
+    }
+
+    public RpcProtocolException(String message, Throwable cause) {
+        super(message, cause);
+
+        this.id = null;
+    }
+
+    public RpcProtocolException(String id, String message) {
+        super(message);
+
+        this.id = id;
     }
 
     public String getId() {

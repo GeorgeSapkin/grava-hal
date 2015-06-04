@@ -1,4 +1,4 @@
-package in.sapk.grava.rpc;
+package in.sapk.grava.rpc.protocol;
 
 import java.util.Map;
 

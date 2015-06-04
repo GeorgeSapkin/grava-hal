@@ -5,9 +5,7 @@ import in.sapk.grava.game.Pits;
 import in.sapk.grava.game.Side;
 import in.sapk.grava.game.Turn;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Preconditions.*;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 /**

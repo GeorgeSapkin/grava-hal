@@ -1,6 +1,6 @@
 package in.sapk.grava.rpc;
 
-import in.sapk.grava.rpc.protocol.JsonRpcProtocol;
+import in.sapk.grava.rpc.protocol.json.JsonRpcProtocol;
 
 /**
  * Created by george on 03/06/15.

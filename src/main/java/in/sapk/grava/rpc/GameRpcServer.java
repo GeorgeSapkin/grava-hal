@@ -1,5 +1,6 @@
 package in.sapk.grava.rpc;
 
+import in.sapk.grava.rpc.protocol.RpcMethod;
 import in.sapk.grava.rpc.protocol.RpcProtocol;
 import in.sapk.grava.rpc.protocol.RpcProtocolException;
 import in.sapk.grava.server.GameServer;
