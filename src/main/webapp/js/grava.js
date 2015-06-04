@@ -22,8 +22,9 @@ function GameClient() {
         this.sessionId = params.session;
         this.side      = params.side;
 
-        if (this.side == "A")
+        if (this.side == "A") {
             notify('Waiting for opponent');
+        }
     };
 
     this.update = function(params) {
@@ -32,8 +33,9 @@ function GameClient() {
             return;
         }
 
-        for (var i = 13; i >= 0; --i)
+        for (var i = 13; i >= 0; --i) {
             $('#p' + i).text(params[i]);
+        }
     };
 
     this.turn = function (params) {
@@ -59,8 +61,7 @@ function GameClient() {
 
             if (thisSide) {
                 notify('Your turn');
-            }
-            else {
+            } else {
                 notify("Opponent's turn");
             }
         }
@@ -74,12 +75,15 @@ function notify(msg) {
 }
 
 function toggleSowButtons(enable) {
-    if (enable)
-        for (var i = 5; i >= 0; --i)
+    if (enable) {
+        for (var i = 5; i >= 0; --i) {
             $('#sowButton' + i).removeAttr('disabled');
-    else
-        for (var i = 5; i >= 0; --i)
-            $('#sowButton' + i).attr('disabled','disabled');
+        }
+    } else {
+        for (var i = 5; i >= 0; --i) {
+            $('#sowButton' + i).attr('disabled', 'disabled');
+        }
+    }
 }
 
 function onDefault(msg) {
@@ -115,8 +119,7 @@ function connect() {
         if (msg.id !== undefined) {
             var callback = futures[msg.id];
             callback(msg.result, msg.error);
-        }
-        else {
+        } else {
             onNotify(msg);
         }
     };
@@ -140,9 +143,7 @@ function onNotify(msg) {
     var method = gameClient[msg.method];
     if (method !== undefined) {
         method(msg.params);
-
-    }
-    else {
+    } else {
         console.log("Method " + msg.method + " not found");
         onDefault(msg);
     }
