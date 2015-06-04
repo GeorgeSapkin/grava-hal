@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 // TODO: should be injected instead?
 
 /**
@@ -46,12 +48,12 @@ public class JsonRpcProtocol implements RpcProtocol {
         }
 
         String id = obj.getString(ID_KEY, null);
-        if (id == null || id.isEmpty()) {
+        if (isNullOrEmpty(id)) {
             throw new RpcProtocolException(null, ID_KEY + " cannot be null or empty");
         }
 
         String method = obj.getString(METHOD_KEY, null);
-        if (method == null || method.isEmpty()) {
+        if (isNullOrEmpty(method)) {
             throw new RpcProtocolException(id, METHOD_KEY + " cannot be null or empty");
         }
     }
@@ -149,8 +151,8 @@ public class JsonRpcProtocol implements RpcProtocol {
         JsonObject obj;
         try {
             obj = readJson(message);
-        } catch (IllegalArgumentException ex) {
-            throw new RpcProtocolException(null, ex.getMessage());
+        } catch (IllegalArgumentException e) {
+            throw new RpcProtocolException(null, e.getMessage());
         }
 
         validate(obj);

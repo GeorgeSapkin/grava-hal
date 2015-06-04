@@ -2,6 +2,8 @@ package in.sapk.grava.rpc;
 
 import java.util.Map;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 /**
  * Created by george on 03/06/15.
  */
@@ -16,7 +18,7 @@ public class RpcMethod {
             final Map<String, String> params,
             final String id) {
 
-        if (name == null || name.isEmpty()) {
+        if (isNullOrEmpty(name)) {
             throw new IllegalArgumentException("name cannot be null or empty");
         }
 
