@@ -8,22 +8,8 @@ public class Turn {
     private static final int HALF_STONES = 36;
 
     private Side side;
-
-    public Side getSide() {
-        return side;
-    }
-
     private Pits pits;
-
-    public Pits getPits() {
-        return pits;
-    }
-
     private TurnType type;
-
-    public TurnType getType() {
-        return type;
-    }
 
     @SuppressWarnings("SameParameterValue")
     public Turn(Side side, Pits pits) {
@@ -37,6 +23,18 @@ public class Turn {
         this.side = side;
         this.pits = new Pits(side, pits);
         this.type = type;
+    }
+
+    public Side getSide() {
+        return side;
+    }
+
+    public Pits getPits() {
+        return pits;
+    }
+
+    public TurnType getType() {
+        return type;
     }
 
     public Turn sow(final int pitIdx) {
@@ -109,7 +107,6 @@ public class Turn {
         }
 
         Side nextSide = !bonusTurn ? side.getOpposite() : side;
-        Turn nextTurn = new Turn(nextSide, pits, type);
-        return nextTurn;
+        return new Turn(nextSide, pits, type);
     }
 }

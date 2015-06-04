@@ -7,7 +7,19 @@ public class Pit {
 
     private static final int INITIAL_STONE_COUNT = 6;
 
+    private final Side side;
     private int stones;
+    private Pit opposite;
+
+    public Pit(final Side side) {
+        this.side = side;
+        setStones(INITIAL_STONE_COUNT);
+    }
+
+    public Pit(final Side side, final int stones) {
+        this.side = side;
+        setStones(stones);
+    }
 
     public int getStones() {
         return stones;
@@ -37,30 +49,16 @@ public class Pit {
         return result;
     }
 
-    private final Side side;
-
     public Side getSide() {
         return side;
     }
-
-    private Pit opposite;
 
     public Pit getOpposite() {
         return opposite;
     }
 
-    public void setOpposite(Pit opposite) {
+    void setOpposite(Pit opposite) {
         this.opposite = opposite;
-    }
-
-    public Pit(final Side side) {
-        this.side = side;
-        setStones(INITIAL_STONE_COUNT);
-    }
-
-    public Pit(final Side side, final int stones) {
-        this.side = side;
-        setStones(stones);
     }
 
     public boolean canPlaceFrom(final Side side) {

@@ -8,22 +8,8 @@ import java.util.Map;
 public class RpcMethod {
 
     private String id;
-
-    public String getId() {
-        return id;
-    }
-
     private String name;
-
-    public String getName() {
-        return name;
-    }
-
     private Map<String, String> params;
-
-    public Map<String, String> getParams() {
-        return params;
-    }
 
     public RpcMethod(
             final String name,
@@ -36,5 +22,17 @@ public class RpcMethod {
         this.name   = name;
         this.params = params;
         this.id     = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Map<String, String> getParams() {
+        return params;
     }
 }

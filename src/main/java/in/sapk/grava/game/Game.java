@@ -7,16 +7,15 @@ public class Game {
 
     private final Pits pits;
 
-    public Pits getPits() {
-        return pits;
-    }
-
     public Game() {
         pits = new Pits();
     }
 
+    public Pits getPits() {
+        return pits;
+    }
+
     public Turn start() {
-        Turn turn = new Turn(Side.A, pits, TurnType.PLAYER);
-        return turn;
+        return new Turn(Side.A, pits, TurnType.PLAYER);
     }
 }

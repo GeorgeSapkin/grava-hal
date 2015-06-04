@@ -17,7 +17,7 @@ public class GameServer {
 
     /**
      * Joins new or existing game session
-     * @param transport
+     * @param transport GameTransport to be added to a GameSession
      */
     public void join(GameTransport transport) {
         System.out.println("gameServer.join " + transport.getId());

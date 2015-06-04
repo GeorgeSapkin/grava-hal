@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by george on 03/06/15.
  */
-public class GameRpcServer implements RpcServer {
+class GameRpcServer implements RpcServer {
 
     private static final String INDEX_KEY  = "index";
     private static final String SOW_METHOD = "sow";
@@ -22,6 +22,15 @@ public class GameRpcServer implements RpcServer {
         this.protocol = protocol;
 
         gameServer = new GameServer();
+    }
+
+    private static void sendText(RpcSession session, final String message) {
+        try {
+            System.out.println(message);
+            session.sendText(message);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     @Override
@@ -46,15 +55,6 @@ public class GameRpcServer implements RpcServer {
     @Override
     public void onClose(RpcSession session) {
         gameServer.leave(session.getId());
-    }
-
-    private static void sendText(RpcSession session, final String message) {
-        try {
-            System.out.println(message);
-            session.sendText(message);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 
     private void route(final RpcMethod methodCall, RpcSession session) {

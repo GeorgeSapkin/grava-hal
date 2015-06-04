@@ -1,7 +1,5 @@
 package in.sapk.grava.server;
 
-// TODO: add onStarted
-
 import in.sapk.grava.game.Game;
 import in.sapk.grava.game.Pits;
 import in.sapk.grava.game.Side;
@@ -16,6 +14,11 @@ class GameSession {
 
     private GameTransport transportA;
     private GameTransport transportB;
+    private Turn currentTurn;
+
+    public GameSession() {
+        game = new Game();
+    }
 
     public String getIdA() {
         return transportA.getId();
@@ -25,15 +28,8 @@ class GameSession {
         return transportB.getId();
     }
 
-    private Turn currentTurn;
-
-    public GameSession() {
-        game = new Game();
-    }
-
     public boolean isFull() {
-        boolean isFull = transportA != null && transportB != null;
-        return isFull;
+        return transportA != null && transportB != null;
     }
 
     public void join(GameTransport transport) {

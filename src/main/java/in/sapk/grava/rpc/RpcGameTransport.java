@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Created by george on 03/06/15.
  */
-public class RpcGameTransport implements GameTransport {
+class RpcGameTransport implements GameTransport {
 
     private static final String LOGIN_METHOD  = "login";
     private static final String TURN_METHOD   = "turn";

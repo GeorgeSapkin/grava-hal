@@ -26,13 +26,13 @@
     <div>
         <table>
             <tr>
-                <td class="pit opponnetsPit" rowspan="2"><label id="p13">0</label></td>
-                <td class="pit opponnetsPit"><label id="p12">0</label></td>
-                <td class="pit opponnetsPit"><label id="p11">0</label></td>
-                <td class="pit opponnetsPit"><label id="p10">0</label></td>
-                <td class="pit opponnetsPit"><label id="p9">0</label></td>
-                <td class="pit opponnetsPit"><label id="p8">0</label></td>
-                <td class="pit opponnetsPit"><label id="p7">0</label></td>
+                <td class="pit opponentsPit" rowspan="2"><label id="p13">0</label></td>
+                <td class="pit opponentsPit"><label id="p12">0</label></td>
+                <td class="pit opponentsPit"><label id="p11">0</label></td>
+                <td class="pit opponentsPit"><label id="p10">0</label></td>
+                <td class="pit opponentsPit"><label id="p9">0</label></td>
+                <td class="pit opponentsPit"><label id="p8">0</label></td>
+                <td class="pit opponentsPit"><label id="p7">0</label></td>
                 <td class="pit myPit" rowspan="2"><label id="p6">0</label></td>
             </tr>
             <tr>

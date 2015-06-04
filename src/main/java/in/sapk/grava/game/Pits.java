@@ -7,27 +7,27 @@ import java.util.Iterator;
  */
 public class Pits implements Iterable<Pit> {
 
+            static final int TOTAL_PIT_COUNT      = 14;
     private static final int SIDE_A_OFFSET        = 0;
     private static final int SIDE_B_OFFSET        = 7;
     private static final int GRAVA_HAL_OFFSET     = 6;
-            static final int TOTAL_PIT_COUNT      = 14;
     private static final int SIDE_PIT_COUNT       = 6;
     private static final int SIDE_TOTAL_PIT_COUNT = 7;
 
     private final Pit[] pits;
-
-    private void setSide(final Side side) {
-        this.side        = side;
-        this.offset      = (side == Side.A) ? SIDE_A_OFFSET : SIDE_B_OFFSET;
-        this.gravaHalIdx = offset + GRAVA_HAL_OFFSET;
-    }
-
     private Side side;
     private int offset;
     private int gravaHalIdx;
 
     public Pits() {
-        this(Side.A);
+        this.pits = new Pit[TOTAL_PIT_COUNT];
+
+        setSide(Side.A);
+
+        initSide(Side.A);
+        initSide(Side.B);
+
+        initOpposites();
     }
 
     public Pits(final Side side, final Pits other) {
@@ -40,16 +40,27 @@ public class Pits implements Iterable<Pit> {
         setSide(side);
     }
 
-    @SuppressWarnings("SameParameterValue")
-    private Pits(final Side side) {
-        this.pits = new Pit[TOTAL_PIT_COUNT];
+    private static boolean arePlayerPitsEmpty(Pits pits) {
+        for (int i = SIDE_PIT_COUNT - 1; i >= 0; --i) {
+            int stones = pits.get(i).getStones();
+            if (stones != 0)
+                return false;
+        }
+        return true;
+    }
 
-        setSide(side);
+    private static void clearPits(Pits pits) {
+        Pit gravaHal = pits.getGravaHal();
+        for (int i = SIDE_PIT_COUNT - 1; i >= 0; --i) {
+            int stones = pits.get(i).clearStones();
+            gravaHal.addStones(stones);
+        }
+    }
 
-        initSide(Side.A);
-        initSide(Side.B);
-
-        initOpposites();
+    private void setSide(final Side side) {
+        this.side        = side;
+        this.offset      = (side == Side.A) ? SIDE_A_OFFSET : SIDE_B_OFFSET;
+        this.gravaHalIdx = offset + GRAVA_HAL_OFFSET;
     }
 
     public Pit get(final int index) {
@@ -71,8 +82,7 @@ public class Pits implements Iterable<Pit> {
     }
 
     public Pits getOpposite() {
-        Pits opposite = new Pits(side.getOpposite(), this);
-        return opposite;
+        return new Pits(side.getOpposite(), this);
     }
 
     public boolean arePlayerPitsEmpty() {
@@ -83,15 +93,6 @@ public class Pits implements Iterable<Pit> {
         boolean sideBEmpty = arePlayerPitsEmpty(pitsB);
 
         return sideAEmpty || sideBEmpty;
-    }
-
-    private static boolean arePlayerPitsEmpty(Pits pits) {
-        for (int i = SIDE_PIT_COUNT - 1; i >= 0; --i) {
-            int stones = pits.get(i).getStones();
-            if (stones != 0)
-                return false;
-        }
-        return true;
     }
 
     /**
@@ -105,17 +106,8 @@ public class Pits implements Iterable<Pit> {
         clearPits(pitsB);
     }
 
-    private static void clearPits(Pits pits) {
-        Pit gravaHal = pits.getGravaHal();
-        for (int i = SIDE_PIT_COUNT - 1; i >= 0; --i) {
-            int stones = pits.get(i).clearStones();
-            gravaHal.addStones(stones);
-        }
-    }
-
     private int getIndex(final int idx) {
-        int result = (offset + idx) % TOTAL_PIT_COUNT;
-        return result;
+        return (offset + idx) % TOTAL_PIT_COUNT;
     }
 
     private void initSide(final Side side) {

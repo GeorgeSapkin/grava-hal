@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Created by george on 03/06/15.
  */
-public class SocketRpcSession implements RpcSession {
+class SocketRpcSession implements RpcSession {
 
     private Session session;
 
