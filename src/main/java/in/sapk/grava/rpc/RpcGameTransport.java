@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by george on 03/06/15.
  */
@@ -32,9 +34,8 @@ class RpcGameTransport implements GameTransport {
     private RpcProtocol protocol;
 
     public RpcGameTransport(RpcSession session, RpcProtocol protocol) {
-        if (session == null) {
-            throw new IllegalArgumentException("session cannot be null");
-        }
+        checkNotNull(session, "session cannot be null");
+        checkNotNull(protocol, "protocol cannot be null");
 
         this.session = session;
         this.protocol = protocol;
@@ -61,6 +62,9 @@ class RpcGameTransport implements GameTransport {
 
     @Override
     public void notify(Turn turn, Pits pits) {
+        checkNotNull(turn, "turn cannot be null");
+        checkNotNull(pits, "pits cannot be null");
+
         List<String> updateParams = new ArrayList<>();
         pits.forEach((p) -> updateParams.add(Integer.toString(p.getStones())));
 
