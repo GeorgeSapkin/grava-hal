@@ -12,7 +12,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 class SocketRpcSession implements RpcSession {
 
-    private Session session;
+    private final Session session;
 
     public SocketRpcSession(final Session session) {
         checkNotNull(session, "session cannot be null");

@@ -94,11 +94,6 @@ function connect() {
     // Create a new instance of the websocket
     this.webSocket = new WebSocket(this.endpoint);
 
-    this.webSocket.onopen = function(event){
-        if (event.data === undefined)
-            return;
-    };
-
     var isMessageValid = this.isMessageValid;
     var onNotify       = this.onNotify;
 

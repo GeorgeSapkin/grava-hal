@@ -10,9 +10,9 @@ import static com.google.common.base.Strings.isNullOrEmpty;
  */
 public class RpcMethod {
 
-    private String id;
-    private String name;
-    private Map<String, String> params;
+    private final String id;
+    private final String name;
+    private final Map<String, String> params;
 
     public RpcMethod(
             final String name,

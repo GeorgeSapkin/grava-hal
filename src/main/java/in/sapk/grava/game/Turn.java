@@ -9,9 +9,9 @@ public class Turn {
 
     private static final int HALF_STONES = 36;
 
-    private Side side;
-    private Pits pits;
-    private TurnType type;
+    private final Side side;
+    private final Pits pits;
+    private final TurnType type;
 
     @SuppressWarnings("SameParameterValue")
     public Turn(Side side, Pits pits) {

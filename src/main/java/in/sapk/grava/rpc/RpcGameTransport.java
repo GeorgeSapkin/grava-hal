@@ -30,8 +30,8 @@ class RpcGameTransport implements GameTransport {
     private static final String SIDE_KEY = "side";
     private static final String TYPE_KEY = "turnType";
 
-    private RpcSession session;
-    private RpcProtocol protocol;
+    private final RpcSession session;
+    private final RpcProtocol protocol;
 
     public RpcGameTransport(RpcSession session, RpcProtocol protocol) {
         checkNotNull(session, "session cannot be null");
