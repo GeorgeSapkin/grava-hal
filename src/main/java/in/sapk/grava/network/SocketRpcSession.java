@@ -5,6 +5,8 @@ import in.sapk.grava.rpc.RpcSession;
 import javax.websocket.Session;
 import java.io.IOException;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by george on 03/06/15.
  */
@@ -13,9 +15,7 @@ class SocketRpcSession implements RpcSession {
     private Session session;
 
     public SocketRpcSession(final Session session) {
-        if (session == null) {
-            throw new IllegalArgumentException("session cannot be null");
-        }
+        checkNotNull(session, "session cannot be null");
 
         this.session = session;
     }
