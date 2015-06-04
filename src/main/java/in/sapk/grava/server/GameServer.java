@@ -3,6 +3,9 @@ package in.sapk.grava.server;
 import java.util.*;
 import java.util.logging.Logger;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+
 /**
  * Created by george on 27/05/15.
  */
@@ -22,8 +25,11 @@ public class GameServer {
      * Joins new or existing game session
      *
      * @param transport GameTransport to be added to a GameSession
+     * @throws NullPointerException
      */
     public void join(GameTransport transport) {
+        checkNotNull(transport, "transport cannot be null");
+
         LOGGER.info(transport.getId() + ": joining game");
 
         GameSession session = getLastSession();
@@ -35,17 +41,17 @@ public class GameServer {
     }
 
     public void sow(final String sessionId, final int idx) {
-        if (!sessionMap.containsKey(sessionId))
-            throw new IllegalStateException(
-                    "Game session " + sessionId + " doesn't exist");
+        checkState(sessionMap.containsKey(sessionId),
+                "Game session " + sessionId + " doesn't exist");
 
         GameSession session = sessionMap.get(sessionId);
         session.sow(sessionId, idx);
     }
 
     public void leave(final String sessionId) {
-        if (!sessionMap.containsKey(sessionId))
+        if (!sessionMap.containsKey(sessionId)) {
             return;
+        }
 
         LOGGER.info(sessionId + ": leaving");
 
