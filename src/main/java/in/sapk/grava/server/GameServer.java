@@ -3,8 +3,10 @@ package in.sapk.grava.server;
 import java.util.*;
 import java.util.logging.Logger;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Strings.isNullOrEmpty;
 
 /**
  * Created by george on 27/05/15.
@@ -41,6 +43,7 @@ public class GameServer {
     }
 
     public void sow(final String sessionId, final int idx) {
+        checkArgument(!isNullOrEmpty(sessionId), "sessionId cannot be null or empty");
         checkState(sessionMap.containsKey(sessionId),
                 "Game session " + sessionId + " doesn't exist");
 
@@ -49,6 +52,8 @@ public class GameServer {
     }
 
     public void leave(final String sessionId) {
+        checkArgument(!isNullOrEmpty(sessionId), "sessionId cannot be null or empty");
+
         if (!sessionMap.containsKey(sessionId)) {
             return;
         }
