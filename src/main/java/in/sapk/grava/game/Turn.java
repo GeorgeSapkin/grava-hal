@@ -108,7 +108,16 @@ public class Turn {
         Side nextSide = side;
         // if game over, check which side has more stones
         if (nextTurnType == TurnType.GAME_OVER) {
-            nextSide = gravaHal.getStones() > gravaHal.getOpposite().getStones() ? side : side.getOpposite();
+            final int thisStones = gravaHal.getStones();
+            final int otherStones = gravaHal.getOpposite().getStones();
+
+            if (thisStones > otherStones) {
+                nextSide = side;
+            } else if (otherStones > thisStones) {
+                nextSide = side.getOpposite();
+            } else { // stones are equal
+                nextTurnType = TurnType.DRAW;
+            }
         } else if (!bonusTurn) {
             nextSide = side.getOpposite();
         }

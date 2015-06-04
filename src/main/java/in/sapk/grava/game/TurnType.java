@@ -5,5 +5,6 @@ package in.sapk.grava.game;
  */
 public enum TurnType {
     PLAYER,
-    GAME_OVER
+    GAME_OVER,
+    DRAW
 }

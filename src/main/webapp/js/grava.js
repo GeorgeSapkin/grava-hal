@@ -51,10 +51,14 @@ function GameClient() {
         if (turnType != "PLAYER") {
             toggleSowButtons(false);
 
-            if (thisSide) {
-                notify('Game over, you win');
+            if (turnType == "DRAW") {
+                notify("Game over, it's a draw");
             } else {
-                notify('Game over, opponent wins');
+                if (thisSide) {
+                    notify('Game over, you win');
+                } else {
+                    notify('Game over, opponent wins');
+                }
             }
         } else {
             toggleSowButtons(thisSide);

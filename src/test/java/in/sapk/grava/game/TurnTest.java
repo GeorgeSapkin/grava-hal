@@ -235,4 +235,47 @@ public class TurnTest {
         assertEquals(0,  pitsB.get(5).getStones());
         assertEquals(31, pitsB.getGravaHal().getStones());
     }
+
+    @Test
+    public void testMove_gameOver_draw() {
+        pitsA.get(0).clearStones();
+        pitsA.get(1).clearStones();
+        pitsA.get(2).clearStones();
+        pitsA.get(3).clearStones();
+        pitsA.get(4).clearStones();
+        pitsA.get(5).clearStones();
+        pitsA.get(5).addStones(1);
+        pitsA.getGravaHal().addStones(35);
+
+        pitsB.get(0).clearStones();
+        pitsB.get(1).clearStones();
+        pitsB.get(2).clearStones();
+        pitsB.get(3).clearStones();
+        pitsB.get(4).clearStones();
+        pitsB.get(5).clearStones();
+        pitsB.get(5).addStones(1);
+        pitsB.getGravaHal().addStones(35);
+
+        Turn turn1 = new Turn(Side.A, pitsA);
+        Turn turn2 = turn1.sow(5);
+
+        assertNotNull(turn2);
+        assertEquals(TurnType.DRAW, turn2.getType());
+
+        assertEquals(0,  pitsA.get(0).getStones());
+        assertEquals(0,  pitsA.get(1).getStones());
+        assertEquals(0,  pitsA.get(2).getStones());
+        assertEquals(0,  pitsA.get(3).getStones());
+        assertEquals(0,  pitsA.get(4).getStones());
+        assertEquals(0,  pitsA.get(5).getStones());
+        assertEquals(36, pitsA.getGravaHal().getStones());
+
+        assertEquals(0,  pitsB.get(0).getStones());
+        assertEquals(0,  pitsB.get(1).getStones());
+        assertEquals(0,  pitsB.get(2).getStones());
+        assertEquals(0,  pitsB.get(3).getStones());
+        assertEquals(0,  pitsB.get(4).getStones());
+        assertEquals(0,  pitsB.get(5).getStones());
+        assertEquals(36, pitsB.getGravaHal().getStones());
+    }
 }
