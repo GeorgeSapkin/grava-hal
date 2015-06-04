@@ -184,6 +184,7 @@ public class TurnTest {
 
         assertNotNull(turn2);
         assertEquals(TurnType.GAME_OVER, turn2.getType());
+        assertEquals(Side.A, turn2.getSide());
 
         assertEquals(0,  pitsA.get(0).getStones());
         assertEquals(0,  pitsA.get(1).getStones());

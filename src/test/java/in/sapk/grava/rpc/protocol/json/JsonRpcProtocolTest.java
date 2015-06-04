@@ -4,8 +4,6 @@ import in.sapk.grava.rpc.protocol.RpcProtocolException;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by george on 04/06/15.
  */

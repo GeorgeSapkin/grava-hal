@@ -45,18 +45,24 @@ function GameClient() {
         var side     = params.side;
         var turnType = params.turnType;
 
+        var thisSide = side == this.side;
         if (turnType != "PLAYER") {
-            notify('Game over');
             toggleSowButtons(false);
-        }
-        else {
-            var thisSide = side == this.side;
+
+            if (thisSide) {
+                notify('Game over, you win');
+            } else {
+                notify('Game over, opponent wins');
+            }
+        } else {
             toggleSowButtons(thisSide);
 
-            if (thisSide)
+            if (thisSide) {
                 notify('Your turn');
-            else
+            }
+            else {
                 notify("Opponent's turn");
+            }
         }
     }
 }

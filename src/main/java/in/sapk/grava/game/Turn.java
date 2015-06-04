@@ -105,7 +105,8 @@ public class Turn {
             nextTurnType = TurnType.GAME_OVER;
         }
 
-        Side nextSide = !bonusTurn ? side.getOpposite() : side;
+        // if not bonus turn and game is not over switch sides
+        Side nextSide = !bonusTurn && nextTurnType == TurnType.PLAYER ? side.getOpposite() : side;
         return new Turn(nextSide, pits, nextTurnType);
     }
 }
