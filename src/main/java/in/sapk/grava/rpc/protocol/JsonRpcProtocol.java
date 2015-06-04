@@ -32,7 +32,7 @@ public class JsonRpcProtocol implements RpcProtocol {
         try (JsonReader jsonReader = Json.createReader(new StringReader(message))) {
             result = jsonReader.readObject();
         } catch (JsonException | IllegalStateException e) {
-            throw new RpcProtocolException(null, e.getMessage());
+            throw new RpcProtocolException(e);
         }
 
         return result;
@@ -43,12 +43,12 @@ public class JsonRpcProtocol implements RpcProtocol {
 
         String version = obj.getString(JSON_RPC_KEY, null);
         if (!JSON_RPC_VALUE.equals(version)) {
-            throw new RpcProtocolException(null, JSON_RPC_KEY + " value must be " + JSON_RPC_VALUE);
+            throw new RpcProtocolException(JSON_RPC_KEY + " value must be " + JSON_RPC_VALUE);
         }
 
         String id = obj.getString(ID_KEY, null);
         if (isNullOrEmpty(id)) {
-            throw new RpcProtocolException(null, ID_KEY + " cannot be null or empty");
+            throw new RpcProtocolException(ID_KEY + " cannot be null or empty");
         }
 
         String method = obj.getString(METHOD_KEY, null);
@@ -151,13 +151,13 @@ public class JsonRpcProtocol implements RpcProtocol {
         try {
             obj = readJson(message);
         } catch (IllegalArgumentException e) {
-            throw new RpcProtocolException(null, e.getMessage());
+            throw new RpcProtocolException(e);
         }
 
         try {
             validate(obj);
         } catch (NullPointerException e) {
-            throw new RpcProtocolException(null, e.getMessage());
+            throw new RpcProtocolException(e);
         }
 
         String method = obj.getString(METHOD_KEY);
