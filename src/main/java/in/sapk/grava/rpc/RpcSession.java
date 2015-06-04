@@ -8,7 +8,7 @@ import java.io.IOException;
 public interface RpcSession {
     String getId();
 
-    void sendText(String text) throws IOException;
+    void sendMessage(String text) throws IOException;
 
     void close() throws IOException;
 }

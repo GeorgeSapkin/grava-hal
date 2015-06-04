@@ -1,11 +1,14 @@
 package in.sapk.grava.server;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by george on 27/05/15.
  */
 public class GameServer {
+
+    private static final Logger LOGGER = Logger.getLogger(GameServer.class.getName());
 
     private final List<GameSession> sessions;
     private final Map<String, GameSession> sessionMap;
@@ -21,10 +24,12 @@ public class GameServer {
      * @param transport GameTransport to be added to a GameSession
      */
     public void join(GameTransport transport) {
-        System.out.println("gameServer.join " + transport.getId());
+        LOGGER.info(transport.getId() + ": joining game");
 
         GameSession session = getLastSession();
         session.join(transport);
+
+        LOGGER.info(transport.getId() + ": joined game " + session.getIdA());
 
         sessionMap.put(transport.getId(), session);
     }
@@ -42,7 +47,7 @@ public class GameServer {
         if (!sessionMap.containsKey(sessionId))
             return;
 
-        System.out.println("Closing session " + sessionId);
+        LOGGER.info(sessionId + ": leaving");
 
         GameSession session = sessionMap.get(sessionId);
         session.close();
@@ -57,16 +62,13 @@ public class GameServer {
 
         if (!sessions.isEmpty()) {
             session = sessions.get(sessions.size() - 1);
-            System.out.println("Found existing game session " + Thread.currentThread().getId());
         }
 
         if (session == null || session.isFull()) {
-            System.out.println("Creating new game session " + Thread.currentThread().getId());
             session = new GameSession();
 
             sessions.add(session);
-        } else
-            System.out.println("Using existing game session" + Thread.currentThread().getId());
+        }
 
         return session;
     }

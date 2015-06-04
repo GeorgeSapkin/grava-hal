@@ -26,9 +26,7 @@ class SocketRpcSession implements RpcSession {
     }
 
     @Override
-    public void sendText(String text) throws IOException {
-        System.out.println(text);
-
+    public void sendMessage(String text) throws IOException {
         session.getBasicRemote().sendText(text);
     }
 

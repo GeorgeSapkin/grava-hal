@@ -13,10 +13,14 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ServerEndpoint("/grava")
 @SuppressWarnings("unused")
 public class SocketServer {
+
+    private static final Logger LOGGER = Logger.getLogger(SocketServer.class.getName());
 
     private final RpcServer rpcServer;
 
@@ -28,7 +32,7 @@ public class SocketServer {
 
     @OnOpen
     public void onOpen(Session session) {
-        System.out.println(session.getId() + " has opened a connection");
+        LOGGER.info(session.getId() + " has started");
 
         RpcSession rpcSession = new SocketRpcSession(session);
         rpcServer.onOpen(rpcSession);
@@ -36,7 +40,7 @@ public class SocketServer {
 
     @OnMessage
     public void onMessage(String message, Session session) {
-        System.out.println("Message from " + session.getId() + ": " + message);
+        LOGGER.log(Level.FINE, session.getId() + ": message " + message);
 
         RpcSession rpcSession = new SocketRpcSession(session);
         rpcServer.onMessage(message, rpcSession);
@@ -44,7 +48,7 @@ public class SocketServer {
 
     @OnClose
     public void onClose(Session session) {
-        System.out.println("Session " + session.getId() + " has ended");
+        LOGGER.info(session.getId() + " has ended");
 
         RpcSession rpcSession = new SocketRpcSession(session);
         rpcServer.onClose(rpcSession);

@@ -11,11 +11,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by george on 03/06/15.
  */
 class RpcGameTransport implements GameTransport {
+
+    private static final Logger LOGGER = Logger.getLogger(RpcGameTransport.class.getName());
 
     private static final String LOGIN_METHOD = "login";
     private static final String TURN_METHOD = "turn";
@@ -49,24 +53,22 @@ class RpcGameTransport implements GameTransport {
         String loginMsg = protocol.getNotification(LOGIN_METHOD, params);
 
         try {
-            session.sendText(loginMsg);
+            session.sendMessage(loginMsg);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            LOGGER.log(Level.WARNING, session.getId() + ": failed to send message", e);
         }
     }
 
     @Override
     public void notify(Turn turn, Pits pits) {
-        System.out.println("Notifying " + getId());
-
         List<String> updateParams = new ArrayList<>();
         pits.forEach((p) -> updateParams.add(Integer.toString(p.getStones())));
 
         String updateMsg = protocol.getNotification(UPDATE_METHOD, updateParams);
         try {
-            session.sendText(updateMsg);
+            session.sendMessage(updateMsg);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            LOGGER.log(Level.WARNING, session.getId() + ": failed to send message", e);
         }
 
         Map<String, String> turnParams = new HashMap<>();
@@ -75,9 +77,9 @@ class RpcGameTransport implements GameTransport {
 
         String turnMsg = protocol.getNotification(TURN_METHOD, turnParams);
         try {
-            session.sendText(turnMsg);
+            session.sendMessage(turnMsg);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            LOGGER.log(Level.WARNING, session.getId() + ": failed to send message", e);
         }
     }
 
@@ -85,8 +87,8 @@ class RpcGameTransport implements GameTransport {
     public void close() {
         try {
             session.close();
-        } catch (IOException ex) {
-            System.out.print("Failed closing session " + getId());
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, session.getId() + ": failed to close", e);
         }
     }
 }
