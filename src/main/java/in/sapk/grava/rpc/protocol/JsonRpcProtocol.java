@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 // TODO: should be injected instead?
@@ -38,9 +39,7 @@ public class JsonRpcProtocol implements RpcProtocol {
     }
 
     private static void validate(JsonObject obj) throws RpcProtocolException {
-        if (obj == null) {
-            throw new IllegalArgumentException("obj cannot be null");
-        }
+        checkNotNull(obj, "obj cannot be null");
 
         String version = obj.getString(JSON_RPC_KEY, null);
         if (!JSON_RPC_VALUE.equals(version)) {
@@ -155,7 +154,11 @@ public class JsonRpcProtocol implements RpcProtocol {
             throw new RpcProtocolException(null, e.getMessage());
         }
 
-        validate(obj);
+        try {
+            validate(obj);
+        } catch (NullPointerException e) {
+            throw new RpcProtocolException(null, e.getMessage());
+        }
 
         String method = obj.getString(METHOD_KEY);
         String id = obj.getString(ID_KEY);
