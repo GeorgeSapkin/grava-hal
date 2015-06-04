@@ -92,7 +92,21 @@ public class GameSessionTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void testSow_badState() throws IllegalStateException {
+    public void testSow_badState_currentTurnIsNull() throws IllegalStateException {
         session.sow("someId", 0);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testSow_badState_wrongSide() throws IllegalStateException {
+        GameTransport transportA = mock(GameTransport.class);
+        when(transportA.getId()).thenReturn("idA");
+
+        GameTransport transportB = mock(GameTransport.class);
+        when(transportB.getId()).thenReturn("idB");
+
+        session.join(transportA);
+        session.join(transportB);
+
+        session.sow("idB", 0);
     }
 }

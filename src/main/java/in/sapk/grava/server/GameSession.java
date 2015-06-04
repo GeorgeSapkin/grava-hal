@@ -61,9 +61,7 @@ class GameSession {
         checkState(currentTurn != null, "Other side has not joined yet");
 
         Side side = getSideFromSession(sessionId);
-        if (currentTurn.getSide() != side) {
-            throw new IllegalStateException("Other side's turn");
-        }
+        checkState(currentTurn.getSide() == side, "Other side's turn");
 
         currentTurn = currentTurn.sow(idx);
 
