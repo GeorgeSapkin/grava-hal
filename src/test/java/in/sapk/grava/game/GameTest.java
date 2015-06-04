@@ -1,5 +1,6 @@
 package in.sapk.grava.game;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,8 +23,7 @@ public class GameTest {
         Pits pits = game.getPits();
         assertNotNull(pits);
 
-//        for (Pit pit: pits)
-//            assertNotNull(pit);
+        pits.forEach(Assert::assertNotNull);
     }
 
     @Test
