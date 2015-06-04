@@ -2,6 +2,7 @@ package in.sapk.grava.rpc;
 
 import java.util.Map;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 /**
@@ -18,9 +19,7 @@ public class RpcMethod {
             final Map<String, String> params,
             final String id) {
 
-        if (isNullOrEmpty(name)) {
-            throw new IllegalArgumentException("name cannot be null or empty");
-        }
+        checkArgument(!isNullOrEmpty(name), "name cannot be null or empty");
 
         this.name = name;
         this.params = params;
