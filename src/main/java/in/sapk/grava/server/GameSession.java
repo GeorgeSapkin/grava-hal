@@ -5,6 +5,11 @@ import in.sapk.grava.game.Pits;
 import in.sapk.grava.game.Side;
 import in.sapk.grava.game.Turn;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 /**
  * Created by george on 27/05/15.
  */
@@ -33,9 +38,8 @@ class GameSession {
     }
 
     public void join(GameTransport transport) {
-        if (isFull()) {
-            throw new IllegalStateException("Cannot join a full session");
-        }
+        checkNotNull(transport, "transport cannot be null");
+        checkState(!isFull(), "Cannot join a full session");
 
         if (transportA == null) {
             transportA = transport;
@@ -53,9 +57,8 @@ class GameSession {
     }
 
     public void sow(final String sessionId, final int idx) {
-        if (currentTurn == null) {
-            throw new IllegalStateException("Other side has not joined yet");
-        }
+        checkArgument(!isNullOrEmpty(sessionId), "sessionId cannot be null or empty");
+        checkState(currentTurn != null, "Other side has not joined yet");
 
         Side side = getSideFromSession(sessionId);
         if (currentTurn.getSide() != side) {
