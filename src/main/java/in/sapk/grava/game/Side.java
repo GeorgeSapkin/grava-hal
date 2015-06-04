@@ -1,8 +1,8 @@
 package in.sapk.grava.game;
 
 public enum Side {
-    A (0),
-    B (1);
+    A(0),
+    B(1);
 
     private final int value;
 

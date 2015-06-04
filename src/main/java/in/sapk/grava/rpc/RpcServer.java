@@ -5,6 +5,8 @@ package in.sapk.grava.rpc;
  */
 public interface RpcServer {
     void onOpen(RpcSession session);
+
     void onMessage(String message, RpcSession session);
+
     void onClose(RpcSession session);
 }

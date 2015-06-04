@@ -12,8 +12,9 @@ public class RpcServerFactory {
 
     public GameRpcServer getRpcServer() {
         synchronized (instanceLock) {
-            if (instance == null)
+            if (instance == null) {
                 instance = new GameRpcServer(new JsonRpcProtocol());
+            }
         }
         return instance;
     }

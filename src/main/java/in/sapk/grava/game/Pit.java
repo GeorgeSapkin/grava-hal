@@ -26,8 +26,9 @@ public class Pit {
     }
 
     private void setStones(final int value) {
-        if (value < 0)
+        if (value < 0) {
             throw new IllegalArgumentException("value must be positive");
+        }
 
         stones = value;
     }
@@ -37,8 +38,9 @@ public class Pit {
     }
 
     public void addStones(final int value) {
-        if (value < 0)
+        if (value < 0) {
             throw new IllegalArgumentException("value must be positive");
+        }
 
         stones += value;
     }

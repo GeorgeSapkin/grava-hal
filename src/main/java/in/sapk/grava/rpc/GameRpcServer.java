@@ -58,14 +58,11 @@ class GameRpcServer implements RpcServer {
     }
 
     private void route(final RpcMethod methodCall, RpcSession session) {
-        switch (methodCall.getName()) {
-            case SOW_METHOD:
-                sow(methodCall, session);
-                break;
-            default: {
-                String msg = protocol.getError(methodCall.getId(), "Undefined method " + methodCall.getName());
-                sendText(session, msg);
-            }
+        if (methodCall.getName() == SOW_METHOD) {
+            sow(methodCall, session);
+        } else {
+            String msg = protocol.getError(methodCall.getId(), "Undefined method " + methodCall.getName());
+            sendText(session, msg);
         }
     }
 

@@ -11,12 +11,13 @@ public class GameServer {
     private final Map<String, GameSession> sessionMap;
 
     public GameServer() {
-        sessions   = Collections.synchronizedList(new ArrayList<>());
+        sessions = Collections.synchronizedList(new ArrayList<>());
         sessionMap = Collections.synchronizedMap(new HashMap<>());
     }
 
-    /**
+    /**s
      * Joins new or existing game session
+     *
      * @param transport GameTransport to be added to a GameSession
      */
     public void join(GameTransport transport) {
@@ -64,8 +65,7 @@ public class GameServer {
             session = new GameSession();
 
             sessions.add(session);
-        }
-        else
+        } else
             System.out.println("Using existing game session" + Thread.currentThread().getId());
 
         return session;

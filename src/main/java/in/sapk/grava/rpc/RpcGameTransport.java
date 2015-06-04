@@ -17,21 +17,22 @@ import java.util.Map;
  */
 class RpcGameTransport implements GameTransport {
 
-    private static final String LOGIN_METHOD  = "login";
-    private static final String TURN_METHOD   = "turn";
+    private static final String LOGIN_METHOD = "login";
+    private static final String TURN_METHOD = "turn";
     private static final String UPDATE_METHOD = "update";
-    private static final String SESSION_KEY   = "session";
-    private static final String SIDE_KEY      = "side";
-    private static final String TYPE_KEY      = "turnType";
+    private static final String SESSION_KEY = "session";
+    private static final String SIDE_KEY = "side";
+    private static final String TYPE_KEY = "turnType";
 
-    private RpcSession  session;
+    private RpcSession session;
     private RpcProtocol protocol;
 
     public RpcGameTransport(RpcSession session, RpcProtocol protocol) {
-        if (session == null)
+        if (session == null) {
             throw new IllegalArgumentException("session cannot be null");
+        }
 
-        this.session  = session;
+        this.session = session;
         this.protocol = protocol;
     }
 

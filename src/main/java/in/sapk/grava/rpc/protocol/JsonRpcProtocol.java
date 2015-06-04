@@ -16,13 +16,13 @@ import java.util.Map;
  */
 public class JsonRpcProtocol implements RpcProtocol {
 
-    private static final String JSON_RPC_KEY   = "jsonrpc";
+    private static final String JSON_RPC_KEY = "jsonrpc";
     private static final String JSON_RPC_VALUE = "2.0";
-    private static final String ID_KEY         = "id";
-    private static final String METHOD_KEY     = "method";
-    private static final String ERROR_KEY      = "error";
-    private static final String MESSAGE_KEY    = "message";
-    private static final String PARAMS_KEY     = "params";
+    private static final String ID_KEY = "id";
+    private static final String METHOD_KEY = "method";
+    private static final String ERROR_KEY = "error";
+    private static final String MESSAGE_KEY = "message";
+    private static final String PARAMS_KEY = "params";
 
     private static JsonObject readJson(String message) throws RpcProtocolException {
         JsonObject result;
@@ -36,20 +36,24 @@ public class JsonRpcProtocol implements RpcProtocol {
     }
 
     private static void validate(JsonObject obj) throws RpcProtocolException {
-        if (obj == null)
+        if (obj == null) {
             throw new IllegalArgumentException("obj cannot be null");
+        }
 
         String version = obj.getString(JSON_RPC_KEY, null);
-        if (!version.equals(JSON_RPC_VALUE))
+        if (!JSON_RPC_VALUE.equals(version)) {
             throw new RpcProtocolException(null, JSON_RPC_KEY + " value must be " + JSON_RPC_VALUE);
+        }
 
         String id = obj.getString(ID_KEY, null);
-        if (id == null || id.isEmpty())
+        if (id == null || id.isEmpty()) {
             throw new RpcProtocolException(null, ID_KEY + " cannot be null or empty");
+        }
 
         String method = obj.getString(METHOD_KEY, null);
-        if (method == null || method.isEmpty())
+        if (method == null || method.isEmpty()) {
             throw new RpcProtocolException(id, METHOD_KEY + " cannot be null or empty");
+        }
     }
 
     @Override
@@ -57,16 +61,18 @@ public class JsonRpcProtocol implements RpcProtocol {
         JsonObjectBuilder msgBuilder = Json.createObjectBuilder();
         msgBuilder.add(JSON_RPC_KEY, JSON_RPC_VALUE);
 
-        if (id != null)
+        if (id != null) {
             msgBuilder.add(ID_KEY, id);
-        else
+        } else {
             msgBuilder.addNull(ID_KEY);
+        }
 
         JsonObjectBuilder errBuilder = Json.createObjectBuilder();
-        if (error != null)
+        if (error != null) {
             errBuilder.add(MESSAGE_KEY, error);
-        else
+        } else {
             errBuilder.addNull(MESSAGE_KEY);
+        }
 
         msgBuilder.add(ERROR_KEY, errBuilder);
 
@@ -85,18 +91,19 @@ public class JsonRpcProtocol implements RpcProtocol {
         JsonObjectBuilder msgBuilder = Json.createObjectBuilder();
         msgBuilder.add(JSON_RPC_KEY, JSON_RPC_VALUE);
 
-        if (method != null)
+        if (method != null) {
             msgBuilder.add(METHOD_KEY, method);
-        else
+        } else {
             msgBuilder.addNull(METHOD_KEY);
+        }
 
         JsonObjectBuilder paramsBuilder = Json.createObjectBuilder();
-
         params.forEach((k, v) -> {
-            if (v != null)
+            if (v != null) {
                 paramsBuilder.add(k, v);
-            else
+            } else {
                 paramsBuilder.addNull(k);
+            }
         });
 
         msgBuilder.add(PARAMS_KEY, paramsBuilder);
@@ -117,10 +124,11 @@ public class JsonRpcProtocol implements RpcProtocol {
         JsonObjectBuilder msgBuilder = Json.createObjectBuilder();
         msgBuilder.add(JSON_RPC_KEY, JSON_RPC_VALUE);
 
-        if (method != null)
+        if (method != null) {
             msgBuilder.add(METHOD_KEY, method);
-        else
+        } else {
             msgBuilder.addNull(METHOD_KEY);
+        }
 
         JsonArrayBuilder paramsBuilder = Json.createArrayBuilder();
         params.forEach(paramsBuilder::add);
@@ -141,32 +149,31 @@ public class JsonRpcProtocol implements RpcProtocol {
         JsonObject obj;
         try {
             obj = readJson(message);
-        }
-        catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException ex) {
             throw new RpcProtocolException(null, ex.getMessage());
         }
 
         validate(obj);
 
         String method = obj.getString(METHOD_KEY);
-        String id     = obj.getString(ID_KEY);
+        String id = obj.getString(ID_KEY);
 
         JsonObject paramsObj = null;
-        try {
-             paramsObj = obj.getJsonObject(PARAMS_KEY);
-        }
-        catch (ClassCastException ex) {
-            // no params
+        JsonValue paramsVal = obj.get(PARAMS_KEY);
+        if (paramsVal.getValueType() == JsonValue.ValueType.OBJECT) {
+            paramsObj = obj.getJsonObject(PARAMS_KEY);
         }
 
         Map<String, String> params = new HashMap<>();
-        if (paramsObj != null)
+        if (paramsObj != null) {
             paramsObj.forEach((k, v) -> {
-                if (v.getValueType() == JsonValue.ValueType.STRING)
-                    params.put(k, ((JsonString)v).getString());
-                else
+                if (v.getValueType() == JsonValue.ValueType.STRING) {
+                    params.put(k, ((JsonString) v).getString());
+                } else {
                     params.put(k, v.toString());
+                }
             });
+        }
 
         return new RpcMethod(method, params, id);
     }

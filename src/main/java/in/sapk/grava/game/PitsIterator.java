@@ -12,7 +12,7 @@ class PitsIterator implements Iterator<Pit> {
 
     public PitsIterator(Pits pits) {
         this.pits = pits;
-        this.idx  = 0;
+        this.idx = 0;
     }
 
     @Override

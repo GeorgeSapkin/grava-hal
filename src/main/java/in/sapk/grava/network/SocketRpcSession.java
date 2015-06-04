@@ -13,8 +13,9 @@ class SocketRpcSession implements RpcSession {
     private Session session;
 
     public SocketRpcSession(final Session session) {
-        if (session == null)
+        if (session == null) {
             throw new IllegalArgumentException("session cannot be null");
+        }
 
         this.session = session;
     }

@@ -12,10 +12,12 @@ public interface GameTransport {
 
     /**
      * Sends login notification with session ID and assigned side
+     *
      * @param side Assigned side
      */
     void notifyLogin(Side side);
 
     void notify(Turn turn, Pits pits);
+
     void close();
 }

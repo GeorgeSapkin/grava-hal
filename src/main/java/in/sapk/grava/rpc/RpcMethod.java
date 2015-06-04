@@ -16,12 +16,13 @@ public class RpcMethod {
             final Map<String, String> params,
             final String id) {
 
-        if (name == null || name.isEmpty())
+        if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("name cannot be null or empty");
+        }
 
-        this.name   = name;
+        this.name = name;
         this.params = params;
-        this.id     = id;
+        this.id = id;
     }
 
     public String getId() {

@@ -33,14 +33,14 @@ class GameSession {
     }
 
     public void join(GameTransport transport) {
-        if (isFull())
+        if (isFull()) {
             throw new IllegalStateException("Cannot join a full session");
+        }
 
         if (transportA == null) {
             transportA = transport;
             transportA.notifyLogin(Side.A);
-        }
-        else {
+        } else {
             transportB = transport;
             transportB.notifyLogin(Side.B);
         }
@@ -53,12 +53,14 @@ class GameSession {
     }
 
     public void sow(final String sessionId, final int idx) {
-        if (currentTurn == null)
+        if (currentTurn == null) {
             throw new IllegalStateException("Other side has not joined yet");
+        }
 
         Side side = getSideFromSession(sessionId);
-        if (currentTurn.getSide() != side)
+        if (currentTurn.getSide() != side) {
             throw new IllegalStateException("Other side's turn");
+        }
 
         currentTurn = currentTurn.sow(idx);
 
@@ -66,11 +68,13 @@ class GameSession {
     }
 
     public void close() {
-        if (transportA != null)
+        if (transportA != null) {
             transportA.close();
+        }
 
-        if (transportB != null)
+        if (transportB != null) {
             transportB.close();
+        }
     }
 
     private void notifySides() {
@@ -82,10 +86,11 @@ class GameSession {
     }
 
     private Side getSideFromSession(final String sessionId) {
-        if (transportA.getId().equals(sessionId))
+        if (transportA.getId().equals(sessionId)) {
             return Side.A;
-        else if (transportB.getId().equals(sessionId))
+        } else if (transportB.getId().equals(sessionId)) {
             return Side.B;
+        }
 
         throw new IllegalStateException(
                 "Side for session " + sessionId + " not found");

@@ -10,8 +10,11 @@ import java.util.Map;
  */
 public interface RpcProtocol {
     String getError(final String id, final String error);
+
     String getNotification(final String method, final Map<String, String> params);
+
     @SuppressWarnings("SameParameterValue")
     String getNotification(final String method, final List<String> params);
+
     RpcMethod getMethod(final String message) throws RpcProtocolException;
 }
