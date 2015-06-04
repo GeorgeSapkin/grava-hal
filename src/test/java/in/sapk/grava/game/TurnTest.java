@@ -171,7 +171,7 @@ public class TurnTest {
     }
 
     @Test
-    public void testMove_gameOver() {
+    public void testMove_gameOver_clearSideB() {
         pitsA.get(0).clearStones();
         pitsA.get(1).clearStones();
         pitsA.get(2).clearStones();
@@ -184,7 +184,7 @@ public class TurnTest {
 
         assertNotNull(turn2);
         assertEquals(TurnType.GAME_OVER, turn2.getType());
-        assertEquals(Side.A, turn2.getSide());
+        assertEquals(Side.B, turn2.getSide());
 
         assertEquals(0,  pitsA.get(0).getStones());
         assertEquals(0,  pitsA.get(1).getStones());
@@ -201,5 +201,38 @@ public class TurnTest {
         assertEquals(0,  pitsB.get(4).getStones());
         assertEquals(0,  pitsB.get(5).getStones());
         assertEquals(41, pitsB.getGravaHal().getStones());
+    }
+
+    @Test
+    public void testMove_gameOver_clearSideA() {
+        pitsB.get(0).clearStones();
+        pitsB.get(1).clearStones();
+        pitsB.get(2).clearStones();
+        pitsB.get(3).clearStones();
+        pitsB.get(4).clearStones();
+        pitsB.getGravaHal().addStones(30);
+
+        Turn turn1 = new Turn(Side.B, pitsB);
+        Turn turn2 = turn1.sow(5);
+
+        assertNotNull(turn2);
+        assertEquals(TurnType.GAME_OVER, turn2.getType());
+        assertEquals(Side.A, turn2.getSide());
+
+        assertEquals(0,  pitsA.get(0).getStones());
+        assertEquals(0,  pitsA.get(1).getStones());
+        assertEquals(0,  pitsA.get(2).getStones());
+        assertEquals(0,  pitsA.get(3).getStones());
+        assertEquals(0,  pitsA.get(4).getStones());
+        assertEquals(0,  pitsA.get(5).getStones());
+        assertEquals(41, pitsA.getGravaHal().getStones());
+
+        assertEquals(0,  pitsB.get(0).getStones());
+        assertEquals(0,  pitsB.get(1).getStones());
+        assertEquals(0,  pitsB.get(2).getStones());
+        assertEquals(0,  pitsB.get(3).getStones());
+        assertEquals(0,  pitsB.get(4).getStones());
+        assertEquals(0,  pitsB.get(5).getStones());
+        assertEquals(31, pitsB.getGravaHal().getStones());
     }
 }

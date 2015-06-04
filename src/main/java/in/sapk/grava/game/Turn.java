@@ -105,8 +105,15 @@ public class Turn {
             nextTurnType = TurnType.GAME_OVER;
         }
 
-        // if not bonus turn and game is not over switch sides
-        Side nextSide = !bonusTurn && nextTurnType == TurnType.PLAYER ? side.getOpposite() : side;
+        Side nextSide = side;
+        // if game over, check which side has more stones
+        if (nextTurnType == TurnType.GAME_OVER) {
+            nextSide = gravaHal.getStones() > gravaHal.getOpposite().getStones() ? side : side.getOpposite();
+        } else if (!bonusTurn) {
+            nextSide = side.getOpposite();
+        }
+        // else same side
+
         return new Turn(nextSide, pits, nextTurnType);
     }
 }

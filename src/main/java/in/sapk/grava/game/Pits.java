@@ -121,7 +121,7 @@ public class Pits implements Iterable<Pit> {
     }
 
     private void initOpposites() {
-        for (int idx = SIDE_PIT_COUNT; idx >= 0; --idx) {
+        for (int idx = SIDE_PIT_COUNT - 1; idx >= 0; --idx) {
             final int opIdx = SIDE_TOTAL_PIT_COUNT + SIDE_PIT_COUNT - idx - 1;
 
             Pit pitA = pitStore[idx];
@@ -129,6 +129,11 @@ public class Pits implements Iterable<Pit> {
             pitA.setOpposite(pitB);
             pitB.setOpposite(pitA);
         }
+
+        final int grIdx = GRAVA_HAL_OFFSET;
+        final int opGrIdx = SIDE_TOTAL_PIT_COUNT + GRAVA_HAL_OFFSET;
+        pitStore[grIdx].setOpposite(pitStore[opGrIdx]);
+        pitStore[opGrIdx].setOpposite(pitStore[grIdx]);
     }
 
     @Override
