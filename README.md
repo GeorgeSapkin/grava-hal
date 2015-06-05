@@ -1,5 +1,7 @@
 # Grava Hal
 
+[![Build Status](https://api.travis-ci.org/GeorgeSapkin/grava-hal.png)](https://travis-ci.org/GeorgeSapkin/grava-hal)
+
 Grava Hal is a simple Backgammon-like game for two players.
 
 ## Running
