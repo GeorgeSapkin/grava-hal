@@ -4,7 +4,7 @@ Grava Hal is a simple Backgammon-like game for two players.
 
 ## Running
 
-`./gradlew appStart` and go to [http://localhost:8080](http://localhost:8080)
+`./gradlew appStart` and go to [http://localhost:8080](http://localhost:8080) for each of the two players.
 
 ## Game Rules
 
