@@ -1,7 +1,7 @@
 package in.sapk.grava.server;
 
+import in.sapk.grava.game.Board;
 import in.sapk.grava.game.Game;
-import in.sapk.grava.game.Pits;
 import in.sapk.grava.game.Side;
 import in.sapk.grava.game.Turn;
 
@@ -77,11 +77,11 @@ class GameSession {
     }
 
     private void notifySides() {
-        Pits pitsA = new Pits(Side.A, currentTurn.getPits());
-        transportA.notify(currentTurn, pitsA);
+        Board boardA = new Board(Side.A, currentTurn.getBoard());
+        transportA.notify(currentTurn, boardA);
 
-        Pits pitsB = pitsA.getOpposite();
-        transportB.notify(currentTurn, pitsB);
+        Board boardB = boardA.getOpposite();
+        transportB.notify(currentTurn, boardB);
     }
 
     private Side getSideFromSession(final String sessionId) {

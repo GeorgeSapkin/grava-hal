@@ -1,6 +1,6 @@
 package in.sapk.grava.server;
 
-import in.sapk.grava.game.Pits;
+import in.sapk.grava.game.Board;
 import in.sapk.grava.game.Side;
 import in.sapk.grava.game.Turn;
 
@@ -17,7 +17,7 @@ public interface GameTransport {
      */
     void notifyLogin(Side side);
 
-    void notify(Turn turn, Pits pits);
+    void notify(Turn turn, Board board);
 
     void close();
 }

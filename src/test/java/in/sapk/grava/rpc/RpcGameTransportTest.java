@@ -1,6 +1,6 @@
 package in.sapk.grava.rpc;
 
-import in.sapk.grava.game.Pits;
+import in.sapk.grava.game.Board;
 import in.sapk.grava.game.Side;
 import in.sapk.grava.game.Turn;
 import in.sapk.grava.rpc.protocol.RpcProtocol;
@@ -49,7 +49,7 @@ public class RpcGameTransportTest {
 
     @Test(expected = NullPointerException.class)
     public void testCtor_badArg_pits() throws NullPointerException {
-        Turn turn = new Turn(Side.A, new Pits());
+        Turn turn = new Turn(Side.A, new Board());
         transport.notify(turn, null);
     }
 }

@@ -1,21 +1,29 @@
 package in.sapk.grava.game;
 
 /**
- * Created by george on 27/05/15.
+ * The Game class is a starting point for a Grava Hal game.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-05-27
  */
 public class Game {
 
-    private final Pits pits;
+    private final Board board;
 
     public Game() {
-        pits = new Pits();
+        board = new Board();
     }
 
-    public Pits getPits() {
-        return pits;
+    public Board getBoard() {
+        return board;
     }
 
+    /**
+     * Starts the game.
+     * @return The first turn of the game.
+     */
     public Turn start() {
-        return new Turn(Side.A, pits, TurnType.PLAYER);
+        return new Turn(Side.A, board, TurnType.PLAYER);
     }
 }

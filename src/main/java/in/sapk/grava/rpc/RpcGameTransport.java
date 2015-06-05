@@ -1,6 +1,6 @@
 package in.sapk.grava.rpc;
 
-import in.sapk.grava.game.Pits;
+import in.sapk.grava.game.Board;
 import in.sapk.grava.game.Side;
 import in.sapk.grava.game.Turn;
 import in.sapk.grava.rpc.protocol.RpcProtocol;
@@ -61,12 +61,12 @@ class RpcGameTransport implements GameTransport {
     }
 
     @Override
-    public void notify(Turn turn, Pits pits) {
+    public void notify(Turn turn, Board board) {
         checkNotNull(turn, "turn cannot be null");
-        checkNotNull(pits, "pits cannot be null");
+        checkNotNull(board, "board cannot be null");
 
         List<String> updateParams = new ArrayList<>();
-        pits.forEach((p) -> updateParams.add(Integer.toString(p.getStones())));
+        board.forEach((p) -> updateParams.add(Integer.toString(p.getStones())));
 
         String updateMsg = protocol.getNotification(UPDATE_METHOD, updateParams);
         try {

@@ -20,10 +20,10 @@ public class GameTest {
 
     @Test
     public void ctor_pitsCountAndNotNull() {
-        Pits pits = game.getPits();
-        assertNotNull(pits);
+        Board board = game.getBoard();
+        assertNotNull(board);
 
-        pits.forEach(Assert::assertNotNull);
+        board.forEach(Assert::assertNotNull);
     }
 
     @Test

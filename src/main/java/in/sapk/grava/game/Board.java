@@ -2,10 +2,16 @@ package in.sapk.grava.game;
 
 import java.util.Iterator;
 
+
 /**
- * Created by george on 30/05/15.
+ * The Board class contains board related logic along with all the pits and a
+ * projection of a board from a specified side's point of view.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-05-30
  */
-public class Pits implements Iterable<Pit> {
+public class Board implements Iterable<Pit> {
 
     static final int TOTAL_PIT_COUNT = 14;
     private static final int SIDE_A_OFFSET = 0;
@@ -14,13 +20,13 @@ public class Pits implements Iterable<Pit> {
     static final int SIDE_PIT_COUNT = 6;
     private static final int SIDE_TOTAL_PIT_COUNT = 7;
 
-    private final Pit[] pitStore;
+    private final Pit[] pits;
     private Side side;
     private int offset;
     private int gravaHalIdx;
 
-    public Pits() {
-        this.pitStore = new Pit[TOTAL_PIT_COUNT];
+    public Board() {
+        this.pits = new Pit[TOTAL_PIT_COUNT];
 
         setSide(Side.A);
 
@@ -30,19 +36,19 @@ public class Pits implements Iterable<Pit> {
         initOpposites();
     }
 
-    public Pits(final Side side, final Pits other) {
-        this(side, other.pitStore);
+    public Board(final Side side, final Board other) {
+        this(side, other.pits);
     }
 
-    private Pits(final Side side, final Pit[] other) {
-        this.pitStore = other;
+    private Board(final Side side, final Pit[] other) {
+        this.pits = other;
 
         setSide(side);
     }
 
-    private static boolean arePlayerPitsEmpty(Pits pits) {
+    private static boolean arePlayerPitsEmpty(Board board) {
         for (int i = SIDE_PIT_COUNT - 1; i >= 0; --i) {
-            int stones = pits.get(i).getStones();
+            int stones = board.get(i).getStones();
             if (stones != 0) {
                 return false;
             }
@@ -50,10 +56,10 @@ public class Pits implements Iterable<Pit> {
         return true;
     }
 
-    private static void clearPits(Pits pits) {
-        Pit gravaHal = pits.getGravaHal();
+    private static void clearPits(Board board) {
+        Pit gravaHal = board.getGravaHal();
         for (int i = SIDE_PIT_COUNT - 1; i >= 0; --i) {
-            int stones = pits.get(i).clearStones();
+            int stones = board.get(i).clearStones();
             gravaHal.addStones(stones);
         }
     }
@@ -64,47 +70,52 @@ public class Pits implements Iterable<Pit> {
         this.gravaHalIdx = offset + GRAVA_HAL_OFFSET;
     }
 
+    /**
+     * Returns the pit for a specified index in board side's view.
+     * @param index Index of a pit in board side's view.
+     * @return The pit for a specified index in board side's view.
+     */
     public Pit get(final int index) {
         int realIdx = getIndex(index);
-        return pitStore[realIdx];
+        return pits[realIdx];
     }
 
     private void set(final int index, Pit pit) {
         int realIdx = getIndex(index);
-        pitStore[realIdx] = pit;
+        pits[realIdx] = pit;
     }
 
     public Pit getGravaHal() {
-        return pitStore[gravaHalIdx];
+        return pits[gravaHalIdx];
     }
 
     private void setGravaHal(Pit pit) {
-        pitStore[gravaHalIdx] = pit;
+        pits[gravaHalIdx] = pit;
     }
 
-    public Pits getOpposite() {
-        return new Pits(side.getOpposite(), this);
+    public Board getOpposite() {
+        return new Board(side.getOpposite(), this);
     }
 
     public boolean arePlayerPitsEmpty() {
-        Pits pitsA = new Pits(Side.A, this);
-        boolean sideAEmpty = arePlayerPitsEmpty(pitsA);
+        Board boardA = new Board(Side.A, this);
+        boolean sideAEmpty = arePlayerPitsEmpty(boardA);
 
-        Pits pitsB = pitsA.getOpposite();
-        boolean sideBEmpty = arePlayerPitsEmpty(pitsB);
+        Board boardB = boardA.getOpposite();
+        boolean sideBEmpty = arePlayerPitsEmpty(boardB);
 
         return sideAEmpty || sideBEmpty;
     }
 
     /**
-     * Moves remaining stones to respective grava hals
+     * Moves remaining stones to respective grava hals.
      */
     public void clearPits() {
-        Pits pitsA = new Pits(Side.A, this);
-        clearPits(pitsA);
+        Board boardA = new Board(Side.A, this);
+        clearPits(boardA);
 
-        Pits pitsB = pitsA.getOpposite();
-        clearPits(pitsB);
+        Board boardB = boardA.getOpposite();
+        clearPits(boardB);
     }
 
     private int getIndex(final int idx) {
@@ -112,32 +123,32 @@ public class Pits implements Iterable<Pit> {
     }
 
     private void initSide(final Side side) {
-        Pits sidePits = new Pits(side, pitStore);
+        Board sideBoard = new Board(side, pits);
         for (int i = SIDE_PIT_COUNT - 1; i >= 0; --i) {
-            sidePits.set(i, new Pit(side));
+            sideBoard.set(i, new Pit(side));
         }
 
-        sidePits.setGravaHal(new GravaHal(side));
+        sideBoard.setGravaHal(new GravaHal(side));
     }
 
     private void initOpposites() {
         for (int idx = SIDE_PIT_COUNT - 1; idx >= 0; --idx) {
             final int opIdx = SIDE_TOTAL_PIT_COUNT + SIDE_PIT_COUNT - idx - 1;
 
-            Pit pitA = pitStore[idx];
-            Pit pitB = pitStore[opIdx];
+            Pit pitA = pits[idx];
+            Pit pitB = pits[opIdx];
             pitA.setOpposite(pitB);
             pitB.setOpposite(pitA);
         }
 
         final int grIdx = GRAVA_HAL_OFFSET;
         final int opGrIdx = SIDE_TOTAL_PIT_COUNT + GRAVA_HAL_OFFSET;
-        pitStore[grIdx].setOpposite(pitStore[opGrIdx]);
-        pitStore[opGrIdx].setOpposite(pitStore[grIdx]);
+        pits[grIdx].setOpposite(pits[opGrIdx]);
+        pits[opGrIdx].setOpposite(pits[grIdx]);
     }
 
     @Override
     public Iterator<Pit> iterator() {
-        return new PitsIterator(this);
+        return new BoardIterator(this);
     }
 }

@@ -11,13 +11,13 @@ import static org.junit.Assert.assertNotNull;
  */
 public class TurnTest {
 
-    private Pits pitsA;
-    private Pits pitsB;
+    private Board boardA;
+    private Board boardB;
 
     @Before
     public void setUp() {
-        pitsA = new Pits();
-        pitsB = pitsA.getOpposite();
+        boardA = new Board();
+        boardB = boardA.getOpposite();
     }
 
     @Test(expected = NullPointerException.class)
@@ -27,46 +27,46 @@ public class TurnTest {
 
     @Test
     public void testGetPits() {
-        Turn turn = new Turn(Side.A, pitsA);
+        Turn turn = new Turn(Side.A, boardA);
 
-        Pits pits2 = turn.getPits();
-        assertNotNull(pits2);
+        Board board2 = turn.getBoard();
+        assertNotNull(board2);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testMove_badArgMinus1() throws IndexOutOfBoundsException {
-        Turn turn = new Turn(Side.A, pitsA);
+        Turn turn = new Turn(Side.A, boardA);
         turn.sow(-1);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
     public void testMove_badArg6() throws IndexOutOfBoundsException {
-        Turn turn = new Turn(Side.A, pitsA);
+        Turn turn = new Turn(Side.A, boardA);
         turn.sow(6);
     }
 
     @Test(expected = IllegalStateException.class)
     public void testMove_noStones() throws IllegalStateException {
-        pitsA.get(0).clearStones();
-        Turn turn = new Turn(Side.A, pitsA);
+        boardA.get(0).clearStones();
+        Turn turn = new Turn(Side.A, boardA);
         turn.sow(0);
     }
 
     @Test
     public void testMove_bonusTurn() {
-        Turn turn1 = new Turn(Side.A, pitsA);
+        Turn turn1 = new Turn(Side.A, boardA);
         Turn turn2 = turn1.sow(0);
 
         assertNotNull(turn2);
         assertEquals(TurnType.PLAYER, turn2.getType());
 
-        assertEquals(0, pitsA.get(0).getStones());
-        assertEquals(7, pitsA.get(1).getStones());
-        assertEquals(7, pitsA.get(2).getStones());
-        assertEquals(7, pitsA.get(3).getStones());
-        assertEquals(7, pitsA.get(4).getStones());
-        assertEquals(7, pitsA.get(5).getStones());
-        assertEquals(1, pitsA.getGravaHal().getStones());
+        assertEquals(0, boardA.get(0).getStones());
+        assertEquals(7, boardA.get(1).getStones());
+        assertEquals(7, boardA.get(2).getStones());
+        assertEquals(7, boardA.get(3).getStones());
+        assertEquals(7, boardA.get(4).getStones());
+        assertEquals(7, boardA.get(5).getStones());
+        assertEquals(1, boardA.getGravaHal().getStones());
 
         Side nextSide = turn2.getSide();
         assertEquals(Side.A, nextSide);
@@ -74,21 +74,21 @@ public class TurnTest {
 
     @Test
     public void testMove_nextSide() {
-        Turn turn1 = new Turn(Side.A, pitsA);
+        Turn turn1 = new Turn(Side.A, boardA);
         Turn turn2 = turn1.sow(1);
 
         assertNotNull(turn2);
         assertEquals(TurnType.PLAYER, turn2.getType());
 
-        assertEquals(6, pitsA.get(0).getStones());
-        assertEquals(0, pitsA.get(1).getStones());
-        assertEquals(7, pitsA.get(2).getStones());
-        assertEquals(7, pitsA.get(3).getStones());
-        assertEquals(7, pitsA.get(4).getStones());
-        assertEquals(7, pitsA.get(5).getStones());
-        assertEquals(1, pitsA.getGravaHal().getStones());
+        assertEquals(6, boardA.get(0).getStones());
+        assertEquals(0, boardA.get(1).getStones());
+        assertEquals(7, boardA.get(2).getStones());
+        assertEquals(7, boardA.get(3).getStones());
+        assertEquals(7, boardA.get(4).getStones());
+        assertEquals(7, boardA.get(5).getStones());
+        assertEquals(1, boardA.getGravaHal().getStones());
 
-        assertEquals(7, pitsB.get(0).getStones());
+        assertEquals(7, boardB.get(0).getStones());
 
         Side nextSide = turn2.getSide();
         assertEquals(Side.B, nextSide);
@@ -96,25 +96,25 @@ public class TurnTest {
 
     @Test
     public void testMove_skipOpponentsGravaHal() {
-        pitsA.get(5).addStones(2);
+        boardA.get(5).addStones(2);
 
-        Turn turn1 = new Turn(Side.A, pitsA);
+        Turn turn1 = new Turn(Side.A, boardA);
         Turn turn2 = turn1.sow(5);
 
         assertNotNull(turn2);
         assertEquals(TurnType.PLAYER, turn2.getType());
 
-        assertEquals(7, pitsA.get(0).getStones());
-        assertEquals(0, pitsA.get(5).getStones());
-        assertEquals(1, pitsA.getGravaHal().getStones());
+        assertEquals(7, boardA.get(0).getStones());
+        assertEquals(0, boardA.get(5).getStones());
+        assertEquals(1, boardA.getGravaHal().getStones());
 
-        assertEquals(7, pitsB.get(0).getStones());
-        assertEquals(7, pitsB.get(1).getStones());
-        assertEquals(7, pitsB.get(2).getStones());
-        assertEquals(7, pitsB.get(3).getStones());
-        assertEquals(7, pitsB.get(4).getStones());
-        assertEquals(7, pitsB.get(5).getStones());
-        assertEquals(0, pitsB.getGravaHal().getStones());
+        assertEquals(7, boardB.get(0).getStones());
+        assertEquals(7, boardB.get(1).getStones());
+        assertEquals(7, boardB.get(2).getStones());
+        assertEquals(7, boardB.get(3).getStones());
+        assertEquals(7, boardB.get(4).getStones());
+        assertEquals(7, boardB.get(5).getStones());
+        assertEquals(0, boardB.getGravaHal().getStones());
 
         Side nextSide = turn2.getSide();
         assertEquals(Side.B, nextSide);
@@ -122,26 +122,26 @@ public class TurnTest {
 
     @Test
     public void testMove_ownEmptyPit() {
-        pitsA.get(0).clearStones();
-        pitsA.get(5).addStones(2);
+        boardA.get(0).clearStones();
+        boardA.get(5).addStones(2);
 
-        Turn turn1 = new Turn(Side.A, pitsA);
+        Turn turn1 = new Turn(Side.A, boardA);
         Turn turn2 = turn1.sow(5);
 
         assertNotNull(turn2);
         assertEquals(TurnType.PLAYER, turn2.getType());
 
-        assertEquals(0, pitsA.get(0).getStones());
-        assertEquals(0, pitsA.get(5).getStones());
-        assertEquals(9, pitsA.getGravaHal().getStones());
+        assertEquals(0, boardA.get(0).getStones());
+        assertEquals(0, boardA.get(5).getStones());
+        assertEquals(9, boardA.getGravaHal().getStones());
 
-        assertEquals(7, pitsB.get(0).getStones());
-        assertEquals(7, pitsB.get(1).getStones());
-        assertEquals(7, pitsB.get(2).getStones());
-        assertEquals(7, pitsB.get(3).getStones());
-        assertEquals(7, pitsB.get(4).getStones());
-        assertEquals(0, pitsB.get(5).getStones());
-        assertEquals(0, pitsB.getGravaHal().getStones());
+        assertEquals(7, boardB.get(0).getStones());
+        assertEquals(7, boardB.get(1).getStones());
+        assertEquals(7, boardB.get(2).getStones());
+        assertEquals(7, boardB.get(3).getStones());
+        assertEquals(7, boardB.get(4).getStones());
+        assertEquals(0, boardB.get(5).getStones());
+        assertEquals(0, boardB.getGravaHal().getStones());
 
         Side nextSide = turn2.getSide();
         assertEquals(Side.B, nextSide);
@@ -149,22 +149,22 @@ public class TurnTest {
 
     @Test
     public void testMove_opponentsEmptyPit() {
-        pitsB.get(0).clearStones();
+        boardB.get(0).clearStones();
 
-        Turn turn1 = new Turn(Side.A, pitsA);
+        Turn turn1 = new Turn(Side.A, boardA);
         Turn turn2 = turn1.sow(1);
 
         assertNotNull(turn2);
         assertEquals(TurnType.PLAYER, turn2.getType());
 
-        assertEquals(0, pitsA.get(1).getStones());
-        assertEquals(7, pitsA.get(2).getStones());
-        assertEquals(7, pitsA.get(3).getStones());
-        assertEquals(7, pitsA.get(4).getStones());
-        assertEquals(7, pitsA.get(5).getStones());
-        assertEquals(1, pitsA.getGravaHal().getStones());
+        assertEquals(0, boardA.get(1).getStones());
+        assertEquals(7, boardA.get(2).getStones());
+        assertEquals(7, boardA.get(3).getStones());
+        assertEquals(7, boardA.get(4).getStones());
+        assertEquals(7, boardA.get(5).getStones());
+        assertEquals(1, boardA.getGravaHal().getStones());
 
-        assertEquals(1, pitsB.get(0).getStones());
+        assertEquals(1, boardB.get(0).getStones());
 
         Side nextSide = turn2.getSide();
         assertEquals(Side.B, nextSide);
@@ -172,110 +172,110 @@ public class TurnTest {
 
     @Test
     public void testMove_gameOver_clearSideB() {
-        pitsA.get(0).clearStones();
-        pitsA.get(1).clearStones();
-        pitsA.get(2).clearStones();
-        pitsA.get(3).clearStones();
-        pitsA.get(4).clearStones();
-        pitsA.getGravaHal().addStones(30);
+        boardA.get(0).clearStones();
+        boardA.get(1).clearStones();
+        boardA.get(2).clearStones();
+        boardA.get(3).clearStones();
+        boardA.get(4).clearStones();
+        boardA.getGravaHal().addStones(30);
 
-        Turn turn1 = new Turn(Side.A, pitsA);
+        Turn turn1 = new Turn(Side.A, boardA);
         Turn turn2 = turn1.sow(5);
 
         assertNotNull(turn2);
         assertEquals(TurnType.GAME_OVER, turn2.getType());
         assertEquals(Side.B, turn2.getSide());
 
-        assertEquals(0,  pitsA.get(0).getStones());
-        assertEquals(0,  pitsA.get(1).getStones());
-        assertEquals(0,  pitsA.get(2).getStones());
-        assertEquals(0,  pitsA.get(3).getStones());
-        assertEquals(0,  pitsA.get(4).getStones());
-        assertEquals(0,  pitsA.get(5).getStones());
-        assertEquals(31, pitsA.getGravaHal().getStones());
+        assertEquals(0,  boardA.get(0).getStones());
+        assertEquals(0,  boardA.get(1).getStones());
+        assertEquals(0,  boardA.get(2).getStones());
+        assertEquals(0,  boardA.get(3).getStones());
+        assertEquals(0,  boardA.get(4).getStones());
+        assertEquals(0,  boardA.get(5).getStones());
+        assertEquals(31, boardA.getGravaHal().getStones());
 
-        assertEquals(0,  pitsB.get(0).getStones());
-        assertEquals(0,  pitsB.get(1).getStones());
-        assertEquals(0,  pitsB.get(2).getStones());
-        assertEquals(0,  pitsB.get(3).getStones());
-        assertEquals(0,  pitsB.get(4).getStones());
-        assertEquals(0,  pitsB.get(5).getStones());
-        assertEquals(41, pitsB.getGravaHal().getStones());
+        assertEquals(0,  boardB.get(0).getStones());
+        assertEquals(0,  boardB.get(1).getStones());
+        assertEquals(0,  boardB.get(2).getStones());
+        assertEquals(0,  boardB.get(3).getStones());
+        assertEquals(0,  boardB.get(4).getStones());
+        assertEquals(0,  boardB.get(5).getStones());
+        assertEquals(41, boardB.getGravaHal().getStones());
     }
 
     @Test
     public void testMove_gameOver_clearSideA() {
-        pitsB.get(0).clearStones();
-        pitsB.get(1).clearStones();
-        pitsB.get(2).clearStones();
-        pitsB.get(3).clearStones();
-        pitsB.get(4).clearStones();
-        pitsB.getGravaHal().addStones(30);
+        boardB.get(0).clearStones();
+        boardB.get(1).clearStones();
+        boardB.get(2).clearStones();
+        boardB.get(3).clearStones();
+        boardB.get(4).clearStones();
+        boardB.getGravaHal().addStones(30);
 
-        Turn turn1 = new Turn(Side.B, pitsB);
+        Turn turn1 = new Turn(Side.B, boardB);
         Turn turn2 = turn1.sow(5);
 
         assertNotNull(turn2);
         assertEquals(TurnType.GAME_OVER, turn2.getType());
         assertEquals(Side.A, turn2.getSide());
 
-        assertEquals(0,  pitsA.get(0).getStones());
-        assertEquals(0,  pitsA.get(1).getStones());
-        assertEquals(0,  pitsA.get(2).getStones());
-        assertEquals(0,  pitsA.get(3).getStones());
-        assertEquals(0,  pitsA.get(4).getStones());
-        assertEquals(0,  pitsA.get(5).getStones());
-        assertEquals(41, pitsA.getGravaHal().getStones());
+        assertEquals(0,  boardA.get(0).getStones());
+        assertEquals(0,  boardA.get(1).getStones());
+        assertEquals(0,  boardA.get(2).getStones());
+        assertEquals(0,  boardA.get(3).getStones());
+        assertEquals(0,  boardA.get(4).getStones());
+        assertEquals(0,  boardA.get(5).getStones());
+        assertEquals(41, boardA.getGravaHal().getStones());
 
-        assertEquals(0,  pitsB.get(0).getStones());
-        assertEquals(0,  pitsB.get(1).getStones());
-        assertEquals(0,  pitsB.get(2).getStones());
-        assertEquals(0,  pitsB.get(3).getStones());
-        assertEquals(0,  pitsB.get(4).getStones());
-        assertEquals(0,  pitsB.get(5).getStones());
-        assertEquals(31, pitsB.getGravaHal().getStones());
+        assertEquals(0,  boardB.get(0).getStones());
+        assertEquals(0,  boardB.get(1).getStones());
+        assertEquals(0,  boardB.get(2).getStones());
+        assertEquals(0,  boardB.get(3).getStones());
+        assertEquals(0,  boardB.get(4).getStones());
+        assertEquals(0,  boardB.get(5).getStones());
+        assertEquals(31, boardB.getGravaHal().getStones());
     }
 
     @Test
     public void testMove_gameOver_draw() {
-        pitsA.get(0).clearStones();
-        pitsA.get(1).clearStones();
-        pitsA.get(2).clearStones();
-        pitsA.get(3).clearStones();
-        pitsA.get(4).clearStones();
-        pitsA.get(5).clearStones();
-        pitsA.get(5).addStones(1);
-        pitsA.getGravaHal().addStones(35);
+        boardA.get(0).clearStones();
+        boardA.get(1).clearStones();
+        boardA.get(2).clearStones();
+        boardA.get(3).clearStones();
+        boardA.get(4).clearStones();
+        boardA.get(5).clearStones();
+        boardA.get(5).addStones(1);
+        boardA.getGravaHal().addStones(35);
 
-        pitsB.get(0).clearStones();
-        pitsB.get(1).clearStones();
-        pitsB.get(2).clearStones();
-        pitsB.get(3).clearStones();
-        pitsB.get(4).clearStones();
-        pitsB.get(5).clearStones();
-        pitsB.get(5).addStones(1);
-        pitsB.getGravaHal().addStones(35);
+        boardB.get(0).clearStones();
+        boardB.get(1).clearStones();
+        boardB.get(2).clearStones();
+        boardB.get(3).clearStones();
+        boardB.get(4).clearStones();
+        boardB.get(5).clearStones();
+        boardB.get(5).addStones(1);
+        boardB.getGravaHal().addStones(35);
 
-        Turn turn1 = new Turn(Side.A, pitsA);
+        Turn turn1 = new Turn(Side.A, boardA);
         Turn turn2 = turn1.sow(5);
 
         assertNotNull(turn2);
         assertEquals(TurnType.DRAW, turn2.getType());
 
-        assertEquals(0,  pitsA.get(0).getStones());
-        assertEquals(0,  pitsA.get(1).getStones());
-        assertEquals(0,  pitsA.get(2).getStones());
-        assertEquals(0,  pitsA.get(3).getStones());
-        assertEquals(0,  pitsA.get(4).getStones());
-        assertEquals(0,  pitsA.get(5).getStones());
-        assertEquals(36, pitsA.getGravaHal().getStones());
+        assertEquals(0,  boardA.get(0).getStones());
+        assertEquals(0,  boardA.get(1).getStones());
+        assertEquals(0,  boardA.get(2).getStones());
+        assertEquals(0,  boardA.get(3).getStones());
+        assertEquals(0,  boardA.get(4).getStones());
+        assertEquals(0,  boardA.get(5).getStones());
+        assertEquals(36, boardA.getGravaHal().getStones());
 
-        assertEquals(0,  pitsB.get(0).getStones());
-        assertEquals(0,  pitsB.get(1).getStones());
-        assertEquals(0,  pitsB.get(2).getStones());
-        assertEquals(0,  pitsB.get(3).getStones());
-        assertEquals(0,  pitsB.get(4).getStones());
-        assertEquals(0,  pitsB.get(5).getStones());
-        assertEquals(36, pitsB.getGravaHal().getStones());
+        assertEquals(0,  boardB.get(0).getStones());
+        assertEquals(0,  boardB.get(1).getStones());
+        assertEquals(0,  boardB.get(2).getStones());
+        assertEquals(0,  boardB.get(3).getStones());
+        assertEquals(0,  boardB.get(4).getStones());
+        assertEquals(0,  boardB.get(5).getStones());
+        assertEquals(36, boardB.getGravaHal().getStones());
     }
 }

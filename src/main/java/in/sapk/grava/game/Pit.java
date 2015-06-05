@@ -3,7 +3,11 @@ package in.sapk.grava.game;
 import static com.google.common.base.Preconditions.checkArgument;
 
 /**
- * Created by george on 27/05/15.
+ * The Pit class contains single pit related logic.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-05-27
  */
 public class Pit {
 
@@ -43,6 +47,10 @@ public class Pit {
         stones += value;
     }
 
+    /**
+     * Clears the stones out of the pit.
+     * @return Number of cleared stones.
+     */
     public int clearStones() {
         int result = stones;
         stones = 0;
@@ -53,6 +61,9 @@ public class Pit {
         return side;
     }
 
+    /**
+     * @return The pit on the opposite side of the board.
+     */
     public Pit getOpposite() {
         return opposite;
     }
@@ -61,6 +72,11 @@ public class Pit {
         this.opposite = opposite;
     }
 
+    /**
+     * Check if it is possible to place a stone into a pit from a provided side.
+     * @param side Side to check.
+     * @return Always true, since there are no restriction from which side to place a stone into a pit.
+     */
     boolean canPlaceFrom(final Side side) {
         return true;
     }

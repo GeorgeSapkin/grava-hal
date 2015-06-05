@@ -1,5 +1,12 @@
 package in.sapk.grava.game;
 
+/**
+ * Store the side of a pit or turn.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-05-27
+ */
 public enum Side {
     A(0),
     B(1);
