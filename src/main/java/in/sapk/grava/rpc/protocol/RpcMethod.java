@@ -1,5 +1,6 @@
 package in.sapk.grava.rpc.protocol;
 
+import java.util.Collections;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -35,6 +36,6 @@ public class RpcMethod {
     }
 
     public Map<String, String> getParams() {
-        return params;
+        return Collections.unmodifiableMap(params);
     }
 }

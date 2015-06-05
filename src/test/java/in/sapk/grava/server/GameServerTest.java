@@ -11,7 +11,7 @@ public class GameServerTest {
     private GameServer server;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         server = new GameServer();
     }
 

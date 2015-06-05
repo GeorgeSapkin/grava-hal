@@ -15,7 +15,7 @@ public class GravaHalTest {
     private Pit pit;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         pit = new GravaHal(Side.A);
     }
 

@@ -8,7 +8,6 @@ import in.sapk.grava.rpc.protocol.RpcProtocol;
 import in.sapk.grava.rpc.protocol.RpcProtocolException;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 // TODO: should be injected instead?
@@ -60,18 +59,12 @@ public class JsonRpcProtocol implements RpcProtocol {
             throw new RpcProtocolException("Failed to deserialize RPC method", e);
         }
 
-        try {
-            validate(method);
-        } catch (NullPointerException e) {
-            throw new RpcProtocolException(e);
-        }
+        validate(method);
 
         return new RpcMethod(method.method, method.params, method.id);
     }
 
     private static void validate(JsonRpcMethod method) throws RpcProtocolException {
-        checkNotNull(method, "method cannot be null");
-
         if (!JSON_RPC_VALUE.equals(method.jsonrpc)) {
             throw new RpcProtocolException("jsonrpc value must be " + JSON_RPC_VALUE);
         }

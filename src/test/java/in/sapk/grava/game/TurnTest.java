@@ -15,7 +15,7 @@ public class TurnTest {
     private Pits pitsB;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         pitsA = new Pits();
         pitsB = pitsA.getOpposite();
     }

@@ -14,7 +14,7 @@ public class PitsTest {
     private Pits pitsB;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         pitsA = new Pits();
         pitsB = pitsA.getOpposite();
     }
@@ -27,7 +27,7 @@ public class PitsTest {
     }
 
     @Test
-    public void testArePlayerPitsEmpty_sideA() throws Exception {
+    public void testArePlayerPitsEmpty_sideA() {
         pitsA.get(0).clearStones();
         pitsA.get(1).clearStones();
         pitsA.get(2).clearStones();
@@ -39,7 +39,7 @@ public class PitsTest {
     }
 
     @Test
-    public void testArePlayerPitsEmpty_sideB() throws Exception {
+    public void testArePlayerPitsEmpty_sideB() {
         pitsB.get(0).clearStones();
         pitsB.get(1).clearStones();
         pitsB.get(2).clearStones();
@@ -51,7 +51,7 @@ public class PitsTest {
     }
 
     @Test
-    public void testArePlayerPitsEmpty_sideANotEmpty() throws Exception {
+    public void testArePlayerPitsEmpty_sideANotEmpty() {
         pitsA.get(0).clearStones();
         pitsA.get(1).clearStones();
         pitsA.get(2).clearStones();
@@ -62,7 +62,7 @@ public class PitsTest {
     }
 
     @Test
-    public void testArePlayerPitsEmpty_sideBNotEmpty() throws Exception {
+    public void testArePlayerPitsEmpty_sideBNotEmpty() {
         pitsB.get(0).clearStones();
         pitsB.get(1).clearStones();
         pitsB.get(2).clearStones();
@@ -73,7 +73,7 @@ public class PitsTest {
     }
 
     @Test
-    public void testClearPits() throws Exception {
+    public void testClearPits() {
         pitsA.clearPits();
 
         assertEquals(0, pitsA.get(0).getStones());
