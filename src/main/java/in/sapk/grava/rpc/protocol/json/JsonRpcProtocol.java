@@ -1,7 +1,6 @@
 package in.sapk.grava.rpc.protocol.json;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import in.sapk.grava.rpc.protocol.RpcMethod;
 import in.sapk.grava.rpc.protocol.RpcProtocol;
@@ -27,9 +26,7 @@ public class JsonRpcProtocol implements RpcProtocol {
         message.id = id;
         message.error.message = errorMessage;
 
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-
+        Gson gson = new Gson();
         return gson.toJson(message);
     }
 
@@ -41,9 +38,7 @@ public class JsonRpcProtocol implements RpcProtocol {
         message.method = method;
         message.params = params;
 
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-
+        Gson gson = new Gson();
         return gson.toJson(message);
     }
 
@@ -51,11 +46,9 @@ public class JsonRpcProtocol implements RpcProtocol {
     public RpcMethod getMethod(final String message) throws RpcProtocolException {
         checkArgument(!isNullOrEmpty(message), "message cannot be null or empty");
 
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-
         JsonRpcMethod method;
         try {
+            Gson gson = new Gson();
             method = gson.fromJson(message, JsonRpcMethod.class);
         } catch (JsonSyntaxException e) {
             throw new RpcProtocolException("Failed to deserialize RPC method", e);
@@ -66,6 +59,7 @@ public class JsonRpcProtocol implements RpcProtocol {
         return new RpcMethod(method.method, method.params, method.id);
     }
 
+    // TODO: use a deserializer instead
     private static void validate(JsonRpcMethod method) throws RpcProtocolException {
         if (!JSON_RPC_VALUE.equals(method.jsonrpc)) {
             throw new RpcProtocolException("jsonrpc value must be " + JSON_RPC_VALUE);
