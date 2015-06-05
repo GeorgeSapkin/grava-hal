@@ -11,7 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by george on 03/06/15.
+ * The GameRpcServer class is the glue between WebSocket endpoint and the game server.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-03
  */
 class GameRpcServer implements RpcServer {
 

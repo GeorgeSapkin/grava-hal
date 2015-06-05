@@ -17,7 +17,12 @@ import java.util.logging.Logger;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Created by george on 03/06/15.
+ * GameTransport implementation to abstract RPC session and protocol from
+ * GameServer.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-04
  */
 class RpcGameTransport implements GameTransport {
 

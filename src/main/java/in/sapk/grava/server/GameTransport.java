@@ -5,7 +5,11 @@ import in.sapk.grava.game.Side;
 import in.sapk.grava.game.Turn;
 
 /**
- * Created by george on 27/05/15.
+ * The GameTransport interface to abstract RPC session from GameSever.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-05-27
  */
 public interface GameTransport {
     String getId();

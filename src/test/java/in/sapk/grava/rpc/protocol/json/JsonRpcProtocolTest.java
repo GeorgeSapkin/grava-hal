@@ -1,5 +1,6 @@
 package in.sapk.grava.rpc.protocol.json;
 
+import in.sapk.grava.rpc.protocol.RpcProtocol;
 import in.sapk.grava.rpc.protocol.RpcProtocolException;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,7 @@ import org.junit.Test;
  */
 public class JsonRpcProtocolTest {
 
-    private JsonRpcProtocol protocol;
+    private RpcProtocol protocol;
 
     @Before
     public void setUp() {

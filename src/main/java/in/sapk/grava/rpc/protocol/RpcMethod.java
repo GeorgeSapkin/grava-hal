@@ -7,7 +7,11 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 /**
- * Created by george on 03/06/15.
+ * RPC method call information.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-03
  */
 public class RpcMethod {
 

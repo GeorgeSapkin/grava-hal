@@ -16,6 +16,13 @@ import javax.websocket.server.ServerEndpoint;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The SocketServer class is the WebSocket endpoint of the game server.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-03
+ */
 @ServerEndpoint("/grava")
 @SuppressWarnings("unused")
 public class SocketServer {

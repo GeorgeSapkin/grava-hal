@@ -8,7 +8,11 @@ import java.io.IOException;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Created by george on 03/06/15.
+ * The SocketRpcSession class abstract WebSocket session for use in GameRpcServer.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-03
  */
 class SocketRpcSession implements RpcSession {
 

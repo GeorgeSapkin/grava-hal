@@ -10,10 +10,12 @@ import in.sapk.grava.rpc.protocol.RpcProtocolException;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
-// TODO: should be injected instead?
-
 /**
- * Created by george on 02/06/15.
+ * Basic JSON-RPC protocol implementation.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-02
  */
 public class JsonRpcProtocol implements RpcProtocol {
 

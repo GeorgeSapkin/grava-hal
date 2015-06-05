@@ -3,7 +3,11 @@ package in.sapk.grava.rpc.protocol.json;
 import java.util.Map;
 
 /**
- * Created by george on 04/06/15.
+ * JSON-RPC method
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-04
  */
 @SuppressWarnings("unused")
 class JsonRpcMethod {

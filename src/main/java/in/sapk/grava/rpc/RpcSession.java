@@ -3,7 +3,11 @@ package in.sapk.grava.rpc;
 import java.io.IOException;
 
 /**
- * Created by george on 03/06/15.
+ * The RpcSession interface to abstract WebSocket session from RpcServer.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-03
  */
 public interface RpcSession {
     String getId();

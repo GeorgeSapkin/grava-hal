@@ -7,7 +7,11 @@ import static com.google.common.base.Preconditions.*;
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 /**
- * Created by george on 27/05/15.
+ * Provides, store and manages game sessions.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-05-27
  */
 public class GameServer {
 

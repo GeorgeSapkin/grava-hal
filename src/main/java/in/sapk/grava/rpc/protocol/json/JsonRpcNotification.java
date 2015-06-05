@@ -1,7 +1,11 @@
 package in.sapk.grava.rpc.protocol.json;
 
 /**
- * Created by george on 04/06/15.
+ * JSON-RPC notification
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-04
  */
 @SuppressWarnings("unused")
 class JsonRpcNotification<T> extends JsonRpcMessage {

@@ -1,7 +1,11 @@
 package in.sapk.grava.rpc;
 
 /**
- * Created by george on 03/06/15.
+ * The RpcServer interface for classes that implement the actual server logic.
+ *
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-03
  */
 public interface RpcServer {
     void onOpen(RpcSession session);

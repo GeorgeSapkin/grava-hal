@@ -3,7 +3,9 @@ package in.sapk.grava.rpc;
 import in.sapk.grava.rpc.protocol.json.JsonRpcProtocol;
 
 /**
- * Created by george on 03/06/15.
+ * @author George Sapkin
+ * @version 1.0
+ * @since 2015-06-03
  */
 public class RpcServerFactory {
 
