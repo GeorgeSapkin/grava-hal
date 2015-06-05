@@ -15,6 +15,6 @@ public enum Side {
     }
 
     public Side getOpposite() {
-        return value == A.value ? B : A;
+        return (value == A.value) ? B : A;
     }
 }

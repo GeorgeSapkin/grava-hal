@@ -50,7 +50,8 @@ public class Turn {
 
         boolean bonusTurn = false;
         while (stones != 0) {
-            final Pit destPit = pits.get(++nextPitIdx);
+            ++nextPitIdx;
+            final Pit destPit = pits.get(nextPitIdx);
             if (!destPit.canPlaceFrom(side)) {
                 continue;
             }
@@ -94,7 +95,8 @@ public class Turn {
         return getNextTurn(nextTurnType, bonusTurn);
     }
 
-    private Turn getNextTurn(TurnType nextTurnType, boolean bonusTurn) {
+    private Turn getNextTurn(TurnType turnType, boolean bonusTurn) {
+        TurnType nextTurnType = turnType;
         Side nextSide = side;
         // if game over, check which side has more stones
         if (nextTurnType == TurnType.GAME_OVER) {
@@ -108,7 +110,7 @@ public class Turn {
                 nextTurnType = TurnType.DRAW;
             } else {
                 // else side with most stones is the winner
-                nextSide = thisStones > otherStones ? side : side.getOpposite();
+                nextSide = (thisStones > otherStones) ? side : side.getOpposite();
             }
         } else if (!bonusTurn) {
             nextSide = side.getOpposite();

@@ -73,7 +73,7 @@ public class GameServer {
             session = sessions.get(sessions.size() - 1);
         }
 
-        if (session == null || session.isFull()) {
+        if ((session == null) || session.isFull()) {
             session = new GameSession();
 
             sessions.add(session);

@@ -32,7 +32,7 @@ class GameSession {
     }
 
     public boolean isFull() {
-        return transportA != null && transportB != null;
+        return (transportA != null) && (transportB != null);
     }
 
     public void join(GameTransport transport) {
