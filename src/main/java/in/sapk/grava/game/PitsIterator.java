@@ -1,6 +1,7 @@
 package in.sapk.grava.game;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by george on 03/06/15.
@@ -22,6 +23,11 @@ class PitsIterator implements Iterator<Pit> {
 
     @Override
     public Pit next() {
-        return pits.get(idx++);
+        if (!hasNext())
+            throw new NoSuchElementException();
+
+        Pit result = pits.get(idx);
+        idx++;
+        return result;
     }
 }

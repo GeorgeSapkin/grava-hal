@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
@@ -17,17 +18,27 @@ public class PitsIteratorTest {
     private Iterator<Pit> pitsIterator;
 
     @Before
-    public void setUp() throws Exception {
-        Pits pits = new Pits();
+    public void setUp() {
+        Iterable<Pit> pits = new Pits();
         pitsIterator = pits.iterator();
     }
 
     @Test
-    public void testNext() throws Exception {
+    public void testNext() {
         for (int i = TOTAL_PIT_COUNT - 1; i >= 0; --i) {
             assertTrue(pitsIterator.hasNext());
             assertNotNull(pitsIterator.next());
         }
         assertFalse(pitsIterator.hasNext());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void testNext_bad() throws NoSuchElementException {
+        for (int i = TOTAL_PIT_COUNT - 1; i >= 0; --i) {
+            assertTrue(pitsIterator.hasNext());
+            assertNotNull(pitsIterator.next());
+        }
+
+        pitsIterator.next();
     }
 }
