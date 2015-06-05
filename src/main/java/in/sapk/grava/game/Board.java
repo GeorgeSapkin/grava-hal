@@ -1,6 +1,9 @@
 package in.sapk.grava.game;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 
 /**
@@ -20,13 +23,13 @@ public class Board implements Iterable<Pit> {
     static final int SIDE_PIT_COUNT = 6;
     private static final int SIDE_TOTAL_PIT_COUNT = 7;
 
-    private final Pit[] pits;
+    private final List<Pit> pits;
     private Side side;
     private int offset;
     private int gravaHalIdx;
 
     public Board() {
-        this.pits = new Pit[TOTAL_PIT_COUNT];
+        this.pits = Collections.synchronizedList(new ArrayList<>(TOTAL_PIT_COUNT));
 
         setSide(Side.A);
 
@@ -40,7 +43,7 @@ public class Board implements Iterable<Pit> {
         this(side, other.pits);
     }
 
-    private Board(final Side side, final Pit[] other) {
+    private Board(final Side side, final List<Pit> other) {
         this.pits = other;
 
         setSide(side);
@@ -77,20 +80,27 @@ public class Board implements Iterable<Pit> {
      */
     public Pit get(final int index) {
         int realIdx = getIndex(index);
-        return pits[realIdx];
+        return pits.get(realIdx);
     }
 
     private void set(final int index, Pit pit) {
         int realIdx = getIndex(index);
-        pits[realIdx] = pit;
+
+        if (realIdx >= pits.size())
+            pits.add(realIdx, pit);
+        else
+            pits.set(realIdx, pit);
     }
 
     public Pit getGravaHal() {
-        return pits[gravaHalIdx];
+        return pits.get(gravaHalIdx);
     }
 
     private void setGravaHal(Pit pit) {
-        pits[gravaHalIdx] = pit;
+        if (gravaHalIdx >= pits.size())
+            pits.add(gravaHalIdx, pit);
+        else
+            pits.set(gravaHalIdx, pit);
     }
 
     public Board getOpposite() {
@@ -124,7 +134,7 @@ public class Board implements Iterable<Pit> {
 
     private void initSide(final Side side) {
         Board sideBoard = new Board(side, pits);
-        for (int i = SIDE_PIT_COUNT - 1; i >= 0; --i) {
+        for (int i = 0; i < SIDE_PIT_COUNT; ++i) {
             sideBoard.set(i, new Pit(side));
         }
 
@@ -135,16 +145,16 @@ public class Board implements Iterable<Pit> {
         for (int idx = SIDE_PIT_COUNT - 1; idx >= 0; --idx) {
             final int opIdx = SIDE_TOTAL_PIT_COUNT + SIDE_PIT_COUNT - idx - 1;
 
-            Pit pitA = pits[idx];
-            Pit pitB = pits[opIdx];
+            Pit pitA = pits.get(idx);
+            Pit pitB = pits.get(opIdx);
             pitA.setOpposite(pitB);
             pitB.setOpposite(pitA);
         }
 
         final int grIdx = GRAVA_HAL_OFFSET;
         final int opGrIdx = SIDE_TOTAL_PIT_COUNT + GRAVA_HAL_OFFSET;
-        pits[grIdx].setOpposite(pits[opGrIdx]);
-        pits[opGrIdx].setOpposite(pits[grIdx]);
+        pits.get(grIdx).setOpposite(pits.get(opGrIdx));
+        pits.get(opGrIdx).setOpposite(pits.get(grIdx));
     }
 
     @Override
